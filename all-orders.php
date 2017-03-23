@@ -200,10 +200,10 @@ $role = $_SESSION['role'];
                                                 <span><strong>Rs. '.$total.'</strong></span>
                                             </div>
                                         </div>
-                                    </li>									
-                                </ul>';
+                                    </li>';
 					}
 					?>
+					</ul>
                 </div>
               </div>
             </div>

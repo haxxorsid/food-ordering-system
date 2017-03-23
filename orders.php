@@ -158,13 +158,14 @@ $role = $_SESSION['role'];
                               <a href="#" class="secondary-content"><i class="mdi-action-grade"></i></a>
                               </li>';
 						$order_id = $row['id'];
-						$sql = mysqli_query($con, "SELECT * FROM order_details WHERE order_id = $order_id;");
-						while($row1 = mysqli_fetch_array($sql))
+						$sql1 = mysqli_query($con, "SELECT * FROM order_details WHERE order_id = $order_id;");
+						while($row1 = mysqli_fetch_array($sql1))
 						{
 							$item_id = $row1['item_id'];
 							$sql2 = mysqli_query($con, "SELECT * FROM items WHERE id = $item_id;");
-							while($row2 = mysqli_fetch_array($sql2))
+							while($row2 = mysqli_fetch_array($sql2)){
 								$item_name = $row2['name'];
+							}
 							echo '<li class="collection-item">
                             <div class="row">
                             <div class="col s7">
@@ -192,10 +193,10 @@ $role = $_SESSION['role'];
                                                 <span><strong>Rs. '.$total.'</strong></span>
                                             </div>
                                         </div>
-                                    </li>									
-                                </ul>';
+                                    </li>';
 					}
 					?>
+					 </ul>
                 </div>
               </div>
             </div>
