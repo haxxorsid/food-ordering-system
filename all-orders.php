@@ -163,8 +163,9 @@ $role = $_SESSION['role'];
 							echo '<li class="collection-item">
                             <div class="row">
 							<p><strong>Name: </strong>'.$row3['name'].'</p>
-							<p><strong>Address: </strong>'.$row3['address'].'</p>	
-							<p><strong>Contact: </strong>'.$row3['contact'].'</p>								
+							'.($row3['address'] == '' ? '' : '<p><strong>Address: </strong>'.$row3['address'].'</p>').'	
+							'.($row3['contact'] == '' ? '' : '<p><strong>Contact: </strong>'.$row3['contact'].'</p>').'	
+							'.($row3['email'] == '' ? '' : '<p><strong>Email: </strong>'.$row3['email'].'</p>').'							
                             </li>';								
 							}
 						while($row1 = mysqli_fetch_array($sql1))
