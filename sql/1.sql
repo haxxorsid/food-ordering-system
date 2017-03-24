@@ -32,7 +32,7 @@ CREATE TABLE `users` (
   `name` varchar(15) NOT NULL,
   `username` varchar(10) NOT NULL,
   `password` varchar(16) NOT NULL,
-  `email` varchar(35) NOT NULL,
+  `email` varchar(35) DEFAULT NULL,
   `address` varchar(300) DEFAULT NULL,
   `contact` int(11) NOT NULL,
   `deleted` tinyint(4) NOT NULL DEFAULT '0'
