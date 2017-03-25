@@ -1,16 +1,9 @@
 <?php
-	session_start();
-$servername = "localhost";
-$server_user = "root";
-$server_pass = "";
-$dbname = "food";
-$success=false;
+include 'connect.php';
+
 $total = 0;
-$con = new mysqli($servername, $server_user, $server_pass, $dbname);
 
 $customer_id = $_SESSION['user_id'];
-$name = $_SESSION['name'];
-$role = $_SESSION['role'];
 
 	if($_SESSION['customer_sid']==session_id())
 	{
@@ -144,17 +137,19 @@ $role = $_SESSION['role'];
 <div id="work-collections" class="seaction">
              
 					<?php 
-					$sql = mysqli_query($con, "SELECT * FROM orders WHERE customer_id = $customer_id AND not deleted;");
+					$sql = mysqli_query($con, "SELECT * FROM orders WHERE customer_id = $customer_id;");
 					echo '              <div class="row">
                 <div>
                     <h4 class="header">List</h4>
                     <ul id="issues-collection" class="collection">';
 					while($row = mysqli_fetch_array($sql))
 					{
+						$status = $row['status'];
 						echo '<li class="collection-item avatar">
                               <i class="mdi-content-content-paste red circle"></i>
                               <span class="collection-header">Order No. '.$row['id'].'</span>
-                              <p>Date: '.$row['date'].'</p>
+                              <p><strong>Date:</strong> '.$row['date'].'</p>
+                              <p><strong>Status:</strong> '.($status=='Cancelled by Customer' ? 'Cancelled by You' : ($status=='Paused' ? 'Paused <a  data-position="bottom" data-delay="50" data-tooltip="Order has been paused, because there was some problem verifying your details." class="btn-floating waves-effect waves-light tooltipped cyan">    ?</a>' : $status)).'</p>							  
                               <a href="#" class="secondary-content"><i class="mdi-action-grade"></i></a>
                               </li>';
 						$order_id = $row['id'];
@@ -179,6 +174,7 @@ $role = $_SESSION['role'];
                             </div>
                             </div>
                             </li>';
+							$id = $row1['order_id'];
 							$total = $total + $row1['price'];
 						}
 								echo'<li class="collection-item">
@@ -191,9 +187,20 @@ $role = $_SESSION['role'];
                                             </div>
                                             <div class="col s3">
                                                 <span><strong>Rs. '.$total.'</strong></span>
-                                            </div>
-                                        </div>
-                                    </li>';
+                                            </div>';
+								if(!preg_match('/^Cancelled/', $status)){
+									if($status != 'Delivered'){
+								echo '<form action="cancel-order.php" method="post">
+										<input type="hidden" value="'.$id.'" name="id">
+										<input type="hidden" value="Cancelled by Customer" name="status">										
+										<button class="btn waves-effect waves-light right submit" type="submit" name="action">Cancel Order
+                                              <i class="mdi-content-clear right"></i> 
+										</button>
+										</form>';
+								}
+								}
+								echo'</div></li>';
+
 					}
 					?>
 					 </ul>

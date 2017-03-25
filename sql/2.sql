@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 23, 2017 at 05:39 PM
+-- Generation Time: Mar 25, 2017 at 07:25 PM
 -- Server version: 10.1.21-MariaDB
 -- PHP Version: 5.6.30
 
@@ -38,9 +38,9 @@ CREATE TABLE `items` (
 --
 
 INSERT INTO `items` (`id`, `name`, `price`, `deleted`) VALUES
-(1, 'Item 1', 10, 1),
+(1, 'Item 1', 10, 0),
 (2, 'Item 2', 45, 0),
-(3, 'Item 3', 50, 0);
+(3, 'Item 3', 20, 1);
 
 --
 -- Indexes for dumped tables

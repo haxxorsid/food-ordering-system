@@ -1,14 +1,5 @@
 <?php
-session_start();
-$servername = "localhost";
-$server_user = "root";
-$server_pass = "";
-$dbname = "food";
-$success=false;
-$name = $_SESSION['name'];
-$role = $_SESSION['role'];
-
-$con = new mysqli($servername, $server_user, $server_pass, $dbname);
+include 'connect.php';
 
 
 	if($_SESSION['admin_sid']==session_id())
@@ -214,7 +205,6 @@ $con = new mysqli($servername, $server_user, $server_pass, $dbname);
 						$text2 = 'selected';						
 					}
 					echo '<select name="'.$row['id'].'_hide">
-                      <option value="" disabled selected>Choose your option</option>
                       <option value="1"'.$text1.'>Available</option>
                       <option value="2"'.$text2.'>Not Available</option>
                     </select></td></tr>';

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 25, 2017 at 04:08 PM
+-- Generation Time: Mar 25, 2017 at 07:25 PM
 -- Server version: 10.1.21-MariaDB
 -- PHP Version: 5.6.30
 
@@ -43,7 +43,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `role`, `name`, `username`, `password`, `email`, `address`, `contact`, `deleted`) VALUES
-(1, 'Customer', 'Customer 1', 'user1', 'pass1', '', 'asdadasd', 1234567, 0),
+(1, 'Customer', 'New Customer na', 'user1', '123123', 'someemail@email.com', 'asdasdvxvxvzxv', 1234567, 0),
 (2, 'Administrator', 'Admin 1', 'root', 'toor', '', 'Some Admin ddress', 98765432, 0);
 
 --

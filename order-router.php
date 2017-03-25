@@ -1,12 +1,6 @@
 <?php
-session_start();
-$servername = "localhost";
-$server_user = "root";
-$server_pass = "";
-$dbname = "food";
-$success=false;
+include 'connect.php';
 $total = 0;
-$con = new mysqli($servername, $server_user, $server_pass, $dbname);
 
 $customer_id = $_SESSION['user_id'];
 $sql = "INSERT INTO orders (customer_id) VALUES ($customer_id)";

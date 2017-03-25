@@ -1,10 +1,6 @@
 <?php
-$servername = "localhost";
-$server_user = "root";
-$server_pass = "";
-$dbname = "food";
+include 'connect.php';
 $success=false;
-$con = new mysqli($servername, $server_user, $server_pass, $dbname);
 
 $username = $_POST['username'];
 $password = $_POST['password'];
@@ -16,10 +12,6 @@ while($row = mysqli_fetch_array($result))
 	$user_id = $row['id'];
 	$name = $row['name'];
 	$role= $row['role'];
-	$address= $row['address'];
-	$contact= $row['contact'];
-	$email= $row['email'];
-	$user_name = $row['username'];
 }
 if($success == true)
 {	
@@ -28,10 +20,6 @@ if($success == true)
 	$_SESSION['user_id'] = $user_id;
 	$_SESSION['role'] = $role;
 	$_SESSION['name'] = $name;
-	$_SESSION['address'] = $address;
-	$_SESSION['email'] = $email;
-	$_SESSION['contact'] = $contact;
-	$_SESSION['username'] = $user_name;
 	
 
 	header("location:admin-page.php");
@@ -45,10 +33,6 @@ else
 	$user_id = $row['id'];
 	$name = $row['name'];
 	$role= $row['role'];
-	$address= $row['address'];
-	$contact= $row['contact'];
-	$email= $row['email'];	
-	$user_name = $row['username'];	
 	}
 	if($success == true)
 	{
@@ -56,11 +40,7 @@ else
 		$_SESSION['customer_sid']=session_id();
 		$_SESSION['user_id'] = $user_id;
 		$_SESSION['role'] = $role;
-		$_SESSION['name'] = $name;
-		$_SESSION['address'] = $address;
-		$_SESSION['email'] = $email;
-		$_SESSION['contact'] = $contact;
-		$_SESSION['username'] = $user_name;		
+		$_SESSION['name'] = $name;	
 		header("location:index.php");
 	}
 	else

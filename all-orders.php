@@ -1,15 +1,7 @@
 <?php
-	session_start();
-$servername = "localhost";
-$server_user = "root";
-$server_pass = "";
-$dbname = "food";
-$success=false;
+include 'connect.php';
 $total = 0;
-$con = new mysqli($servername, $server_user, $server_pass, $dbname);
 
-$name = $_SESSION['name'];
-$role = $_SESSION['role'];
 
 	if($_SESSION['admin_sid']==session_id())
 	{
@@ -101,9 +93,9 @@ $role = $_SESSION['role'];
                 </div>
             </div>
             </li>
-            <li class="bold active"><a href="index.php" class="waves-effect waves-cyan"><i class="mdi-editor-border-color"></i> Food Menu</a>
+            <li class="bold"><a href="index.php" class="waves-effect waves-cyan"><i class="mdi-editor-border-color"></i> Food Menu</a>
             </li>
-            <li class="bold"><a href="all-orders.php" class="waves-effect waves-cyan"><i class="mdi-editor-insert-invitation"></i> Orders</a>
+            <li class="bold active"><a href="all-orders.php" class="waves-effect waves-cyan"><i class="mdi-editor-insert-invitation"></i> Orders</a>
             </li>
         </ul>
         <a href="#" data-activates="slide-out" class="sidebar-collapse btn-floating btn-medium waves-effect waves-light hide-on-large-only cyan"><i class="mdi-navigation-menu"></i></a>
@@ -141,17 +133,29 @@ $role = $_SESSION['role'];
 <div id="work-collections" class="seaction">
              
 					<?php 
-					$sql = mysqli_query($con, "SELECT * FROM orders WHERE not deleted;");
+					$sql = mysqli_query($con, "SELECT * FROM orders;");
 					echo '<div class="row">
                 <div>
                     <h4 class="header">List</h4>
                     <ul id="issues-collection" class="collection">';
 					while($row = mysqli_fetch_array($sql))
 					{
+						$status = $row['status'];
+						$deleted = $row['deleted'];
 						echo '<li class="collection-item avatar">
                               <i class="mdi-content-content-paste red circle"></i>
                               <span class="collection-header">Order No. '.$row['id'].'</span>
-                              <p>Date: '.$row['date'].'</p>
+                              <p><strong>Date:</strong> '.$row['date'].'</p>
+							  <p><strong>Status:</strong> '.($deleted ? $status : '
+							  <form method="post" action="edit-orders.php">
+							    <input type="hidden" value="'.$row['id'].'" name="id">
+								<select name="status">
+								<option value="Yet to be delivered" '.($status=='Yet to be delivered' ? 'selected' : '').'>Yet to be delivered</option>
+								<option value="Delivered" '.($status=='Delivered' ? 'selected' : '').'>Delivered</option>
+								<option value="Cancelled by Admin" '.($status=='Cancelled by Admin' ? 'selected' : '').'>Cancelled by Admin</option>
+								<option value="Paused" '.($status=='Paused' ? 'selected' : '').'>Paused</option>								
+								</select></td></tr>
+							  ').'</p>
                               <a href="#" class="secondary-content"><i class="mdi-action-grade"></i></a>
                               </li>';
 						$order_id = $row['id'];
@@ -199,9 +203,14 @@ $role = $_SESSION['role'];
                                             </div>
                                             <div class="col s3">
                                                 <span><strong>Rs. '.$total.'</strong></span>
-                                            </div>
-                                        </div>
-                                    </li>';
+                                            </div>';
+								if(!$deleted){
+								echo '<button class="btn waves-effect waves-light right submit" type="submit" name="action">Change Status
+                                              <i class="mdi-content-clear right"></i> 
+										</button>
+										</form>';
+								}
+								echo'</div></li>';
 					}
 					?>
 					</ul>

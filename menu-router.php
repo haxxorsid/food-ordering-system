@@ -1,12 +1,5 @@
 <?php
-session_start();
-$servername = "localhost";
-$server_user = "root";
-$server_pass = "";
-$dbname = "food";
-$success=false;
-$total = 0;
-$con = new mysqli($servername, $server_user, $server_pass, $dbname);
+include 'connect.php';
 	foreach ($_POST as $key => $value)
 	{
 		if(preg_match("/[0-9]+_name/",$key)){

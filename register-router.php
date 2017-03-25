@@ -1,13 +1,5 @@
 <?php
-session_start();
-$servername = "localhost";
-$server_user = "root";
-$server_pass = "";
-$dbname = "food";
-$success=false;
-$total = 0;
-
-$con = new mysqli($servername, $server_user, $server_pass, $dbname);
+include 'connect.php';
 $name = $_POST['name'];
 $username = $_POST['username'];
 $password = $_POST['password'];

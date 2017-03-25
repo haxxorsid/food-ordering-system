@@ -1,18 +1,6 @@
 <?php
-session_start();
-$servername = "localhost";
-$server_user = "root";
-$server_pass = "";
-$dbname = "food";
-$success=false;
-$name = $_SESSION['name'];
-$role = $_SESSION['role'];
+include 'connect.php';
 $user_id = $_SESSION['user_id'];
-$address = $_SESSION['address'];
-$contact = $_SESSION['contact'];
-$email = $_SESSION['email'];
-$username = $_SESSION['username'];
-$con = new mysqli($servername, $server_user, $server_pass, $dbname);
 
 $result = mysqli_query($con, "SELECT * FROM users where id = $user_id");
 while($row = mysqli_fetch_array($result)){
