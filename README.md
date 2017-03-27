@@ -5,11 +5,11 @@ How To Install -
 2. Run sql scripts provided in sql folder as numbered.
 3. Go to login.php and try out credentials of user registered in table and enjoy.
 
-Information-
+Features-
 ---------
-1. User assigned to 'Admin' role and 'Customer' role will be automatically redirected to their respective sections after login-ing.
-2. Admin can add items in menu with prices, where as Customer can order them by providing quantity.
-3. Users can register through register.php and registered users can change their details after login-ing.
-4. Admin can view all orders with customer details and customers can view their past orders.
-5. All webpages & routers are properly linked up with each other, you don't even need to read this.
-6. That's it.
+
+1. User login & Registeration.
+2. Customer can order items and view all past orders with current order status and cancel them.
+3. Administrator can add items with name & price, mark them as available & non-available.
+4. Administrator can mark order status as delivered, pause or cancel them. Default order status is 'Yet to be delivered'.
+5. Administratior can view all orders done by his customers with details of customer who placed it with current order status.
