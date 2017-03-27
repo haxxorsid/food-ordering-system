@@ -8,7 +8,7 @@ How To Install -
 Features-
 ---------
 
-1. User login & Registeration.
+1. Customer, Admin login & Customer registration.
 2. Customer can order items and view all past orders with current order status and cancel them.
 3. Administrator can add items with name & price, mark them as available & non-available.
 4. Administrator can mark order status as delivered, pause or cancel them. Default order status is 'Yet to be delivered'.
