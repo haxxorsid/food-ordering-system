@@ -3,7 +3,7 @@ How To Install -
 
 1. Create Database food.
 2. Run sql scripts provided in sql folder as numbered.
-3. Go to login.php and try out credentials of user registered in table and enjoy.
+3. Go to login.php and try out the application.
 
 Features-
 ---------
