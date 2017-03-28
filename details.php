@@ -1,5 +1,5 @@
 <?php
-include 'connect.php';
+include 'includes/connect.php';
 $user_id = $_SESSION['user_id'];
 
 $result = mysqli_query($con, "SELECT * FROM users where id = $user_id");
@@ -129,7 +129,7 @@ $username = $row['username'];
                 </div>
 				 <div class="col col s8 m8 l8">
                     <ul id="profile-dropdown" class="dropdown-content">
-                        <li><a href="logout.php"><i class="mdi-hardware-keyboard-tab"></i> Logout</a>
+                        <li><a href="routers/logout.php"><i class="mdi-hardware-keyboard-tab"></i> Logout</a>
                         </li>
                     </ul>
                 </div>
@@ -179,7 +179,7 @@ $username = $row['username'];
 <div>
                 <div class="card-panel">
                   <div class="row">
-                    <form class="formValidate" id="formValidate" method="post" action="details-router.php" novalidate="novalidate"class="col s12">
+                    <form class="formValidate" id="formValidate" method="post" action="routers/details-router.php" novalidate="novalidate"class="col s12">
                       <div class="row">
                         <div class="input-field col s12">
                           <i class="mdi-action-account-circle prefix"></i>

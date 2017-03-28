@@ -1,5 +1,5 @@
 <?php
-include 'connect.php';
+include '../includes/connect.php';
 $name = $_POST['name'];
 $username = $_POST['username'];
 $password = $_POST['password'];
@@ -27,5 +27,5 @@ if($con->query($sql)==true){
 	$con->query($sql);
 }
 }
-header("location:login.php");
+header("location: ../login.php");
 ?>

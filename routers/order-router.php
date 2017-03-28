@@ -1,6 +1,6 @@
 <?php
-include 'connect.php';
-include 'wallet.php';
+include '../includes/connect.php';
+include '../includes/wallet.php';
 $total = 0;
 $address = $_POST['address'];
 $payment_type = $_POST['payment_type'];
@@ -26,7 +26,7 @@ $total = $_POST['total'];
 		$sql = "UPDATE wallet_details SET balance = $balance WHERE wallet_id = $wallet_id;";
 		$con->query($sql) === TRUE;
 		}
-			header("location:orders.php");
+			header("location: ../orders.php");
 	}
 
 ?>

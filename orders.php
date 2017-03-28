@@ -1,6 +1,6 @@
 <?php
-include 'connect.php';
-include 'wallet.php';
+include 'includes/connect.php';
+include 'includes/wallet.php';
 $total = 0;
 
 	if($_SESSION['customer_sid']==session_id())
@@ -85,7 +85,7 @@ $total = 0;
                 </div>
 				<div class="col col s8 m8 l8">
                     <ul id="profile-dropdown" class="dropdown-content">
-                        <li><a href="logout.php"><i class="mdi-hardware-keyboard-tab"></i> Logout</a>
+                        <li><a href="routers/logout.php"><i class="mdi-hardware-keyboard-tab"></i> Logout</a>
                         </li>
                     </ul>
                 </div>
@@ -186,7 +186,7 @@ $total = 0;
                                             </div>';
 								if(!preg_match('/^Cancelled/', $status)){
 									if($status != 'Delivered'){
-								echo '<form action="cancel-order.php" method="post">
+								echo '<form action="routers/cancel-order.php" method="post">
 										<input type="hidden" value="'.$id.'" name="id">
 										<input type="hidden" value="Cancelled by Customer" name="status">	
 										<input type="hidden" value="'.$row['payment_type'].'" name="payment_type">											

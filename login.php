@@ -52,7 +52,7 @@ else{
 
   <div id="login-page" class="row">
     <div class="col s12 z-depth-4 card-panel">
-      <form method="post" action="router.php" class="login-form" id="form">
+      <form method="post" action="routers/router.php" class="login-form" id="form">
         <div class="row">
           <div class="input-field col s12 center">
             <p class="center login-form-text">Login for Food Ordering System</p>

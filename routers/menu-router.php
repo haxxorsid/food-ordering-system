@@ -1,5 +1,5 @@
 <?php
-include 'connect.php';
+include '../includes/connect.php';
 	foreach ($_POST as $key => $value)
 	{
 		if(preg_match("/[0-9]+_name/",$key)){
@@ -24,5 +24,5 @@ include 'connect.php';
 			}
 		}
 	}
-header("location:admin-page.php");
+header("location: ../admin-page.php");
 ?>

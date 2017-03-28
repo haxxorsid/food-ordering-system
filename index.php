@@ -1,6 +1,6 @@
 <?php
-include 'connect.php';
-include 'wallet.php';
+include 'includes/connect.php';
+include 'includes/wallet.php';
 
 	if($_SESSION['customer_sid']==session_id())
 	{
@@ -125,7 +125,7 @@ include 'wallet.php';
                 </div>
 				 <div class="col col s8 m8 l8">
                     <ul id="profile-dropdown" class="dropdown-content">
-                        <li><a href="logout.php"><i class="mdi-hardware-keyboard-tab"></i> Logout</a>
+                        <li><a href="routers/logout.php"><i class="mdi-hardware-keyboard-tab"></i> Logout</a>
                         </li>
                     </ul>
                 </div>

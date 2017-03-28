@@ -92,7 +92,7 @@ else{
 
   <div id="login-page" class="row">
     <div class="col s12 z-depth-4 card-panel">
-      <form class="formValidate" id="formValidate" method="post" action="register-router.php" novalidate="novalidate" class="col s12">
+      <form class="formValidate" id="formValidate" method="post" action="routers/register-router.php" novalidate="novalidate" class="col s12">
         <div class="row">
           <div class="input-field col s12 center">
             <h4>Register</h4>

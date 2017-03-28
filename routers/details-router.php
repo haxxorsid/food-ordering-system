@@ -1,5 +1,5 @@
 <?php
-include 'connect.php';
+include '../includes/connect.php';
 $user_id = $_SESSION['user_id'];
 
 
@@ -14,5 +14,5 @@ $sql = "UPDATE users SET name = '$name', username = '$username', password='$pass
 if($con->query($sql)==true){
 	$_SESSION['name'] = $name;
 }
-header("location:details.php");
+header("location: ../details.php");
 ?>

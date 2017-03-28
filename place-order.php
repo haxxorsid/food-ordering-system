@@ -1,6 +1,6 @@
 <?php
-include 'connect.php';
-include 'wallet.php';
+include 'includes/connect.php';
+include 'includes/wallet.php';
 $total = 0;
 	if($_SESSION['customer_sid']==session_id())
 	{
@@ -132,7 +132,7 @@ $verified = $row['verified'];
                 </div>
 				<div class="col col s8 m8 l8">
                     <ul id="profile-dropdown" class="dropdown-content">
-                        <li><a href="logout.php"><i class="mdi-hardware-keyboard-tab"></i> Logout</a>
+                        <li><a href="routers/logout.php"><i class="mdi-hardware-keyboard-tab"></i> Logout</a>
                         </li>
                     </ul>
                 </div>

@@ -1,5 +1,5 @@
 <?php
-include 'connect.php';
+include 'includes/connect.php';
 $total = 0;
 
 
@@ -81,7 +81,7 @@ $total = 0;
                 </div>
 				<div class="col col s8 m8 l8">
                     <ul id="profile-dropdown" class="dropdown-content">
-                        <li><a href="logout.php"><i class="mdi-hardware-keyboard-tab"></i> Logout</a>
+                        <li><a href="routers/logout.php"><i class="mdi-hardware-keyboard-tab"></i> Logout</a>
                         </li>
                     </ul>
                 </div>
@@ -143,7 +143,7 @@ $total = 0;
                               <p><strong>Date:</strong> '.$row['date'].'</p>
                               <p><strong>Payment Type:</strong> '.$row['payment_type'].'</p>							  
 							  <p><strong>Status:</strong> '.($deleted ? $status : '
-							  <form method="post" action="edit-orders.php">
+							  <form method="post" action="routers/edit-orders.php">
 							    <input type="hidden" value="'.$row['id'].'" name="id">
 								<select name="status">
 								<option value="Yet to be delivered" '.($status=='Yet to be delivered' ? 'selected' : '').'>Yet to be delivered</option>

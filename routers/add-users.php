@@ -1,5 +1,5 @@
 <?php
-include 'connect.php';
+include '../includes/connect.php';
 
 function number($length) {
     $result = '';
@@ -32,5 +32,5 @@ if($con->query($sql)==true){
 	$con->query($sql);
 }	
 }
-header("location:users.php");
+header("location: ../users.php");
 ?>

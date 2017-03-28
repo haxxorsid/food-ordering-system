@@ -1,5 +1,5 @@
 <?php
-include 'connect.php';
+include 'includes/connect.php';
 
 
 	if($_SESSION['admin_sid']==session_id())
@@ -121,7 +121,7 @@ include 'connect.php';
                 </div>
 				 <div class="col col s8 m8 l8">
                     <ul id="profile-dropdown" class="dropdown-content">
-                        <li><a href="logout.php"><i class="mdi-hardware-keyboard-tab"></i> Logout</a>
+                        <li><a href="routers/logout.php"><i class="mdi-hardware-keyboard-tab"></i> Logout</a>
                         </li>
                     </ul>
                 </div>
@@ -166,7 +166,7 @@ include 'connect.php';
           <div class="divider"></div>
           <!--editableTable-->
           <div id="editableTable" class="section">
-		  <form class="formValidate" id="formValidate" method="post" action="menu-router.php" novalidate="novalidate">
+		  <form class="formValidate" id="formValidate" method="post" action="routers/menu-router.php" novalidate="novalidate">
             <div class="row">
               <div class="col s12 m4 l3">
                 <h4 class="header">Order Food</h4>
@@ -215,7 +215,7 @@ include 'connect.php';
                             </div>
             </div>
 			</form>
-		  <form class="formValidate" id="formValidate1" method="post" action="add-item.php" novalidate="novalidate">
+		  <form class="formValidate" id="formValidate1" method="post" action="routers/add-item.php" novalidate="novalidate">
             <div class="row">
               <div class="col s12 m4 l3">
                 <h4 class="header">Add Item</h4>
