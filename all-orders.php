@@ -33,10 +33,8 @@ $total = 0;
   <link href="css/custom/custom.min.css" type="text/css" rel="stylesheet" media="screen,projection">
 
   <!-- INCLUDED PLUGIN CSS ON THIS PAGE -->
-  <link href="js/plugins/prism/prism.css" type="text/css" rel="stylesheet" media="screen,projection">
   <link href="js/plugins/perfect-scrollbar/perfect-scrollbar.css" type="text/css" rel="stylesheet" media="screen,projection">
-  <link href="js/plugins/chartist-js/chartist.min.css" type="text/css" rel="stylesheet" media="screen,projection">
-  
+ 
 </head>
 
 <body>
@@ -97,6 +95,8 @@ $total = 0;
             </li>
             <li class="bold active"><a href="all-orders.php" class="waves-effect waves-cyan"><i class="mdi-editor-insert-invitation"></i> Orders</a>
             </li>
+            <li class="bold"><a href="users.php" class="waves-effect waves-cyan"><i class="mdi-social-person"></i> Users</a>
+            </li>				
         </ul>
         <a href="#" data-activates="slide-out" class="sidebar-collapse btn-floating btn-medium waves-effect waves-light hide-on-large-only cyan"><i class="mdi-navigation-menu"></i></a>
         </aside>
@@ -109,11 +109,6 @@ $total = 0;
 
         <!--breadcrumbs start-->
         <div id="breadcrumbs-wrapper">
-            <!-- Search for small screen -->
-            <div class="header-search-wrapper grey hide-on-large-only">
-                <i class="mdi-action-search active"></i>
-                <input type="text" name="Search" class="header-search-input z-depth-2" placeholder="Explore Materialize">
-            </div>
           <div class="container">
             <div class="row">
               <div class="col s12 m12 l12">
@@ -146,6 +141,7 @@ $total = 0;
                               <i class="mdi-content-content-paste red circle"></i>
                               <span class="collection-header">Order No. '.$row['id'].'</span>
                               <p><strong>Date:</strong> '.$row['date'].'</p>
+                              <p><strong>Payment Type:</strong> '.$row['payment_type'].'</p>							  
 							  <p><strong>Status:</strong> '.($deleted ? $status : '
 							  <form method="post" action="edit-orders.php">
 							    <input type="hidden" value="'.$row['id'].'" name="id">
@@ -154,7 +150,7 @@ $total = 0;
 								<option value="Delivered" '.($status=='Delivered' ? 'selected' : '').'>Delivered</option>
 								<option value="Cancelled by Admin" '.($status=='Cancelled by Admin' ? 'selected' : '').'>Cancelled by Admin</option>
 								<option value="Paused" '.($status=='Paused' ? 'selected' : '').'>Paused</option>								
-								</select></td></tr>
+								</select>
 							  ').'</p>
                               <a href="#" class="secondary-content"><i class="mdi-action-grade"></i></a>
                               </li>';
@@ -202,7 +198,7 @@ $total = 0;
 											<span> </span>
                                             </div>
                                             <div class="col s3">
-                                                <span><strong>Rs. '.$total.'</strong></span>
+                                                <span><strong>Rs. '.$row['total'].'</strong></span>
                                             </div>';
 								if(!$deleted){
 								echo '<button class="btn waves-effect waves-light right submit" type="submit" name="action">Change Status
@@ -255,8 +251,6 @@ $total = 0;
     <script type="text/javascript" src="js/plugins/angular.min.js"></script>
     <!--materialize js-->
     <script type="text/javascript" src="js/materialize.min.js"></script>
-    <!--prism -->
-    <script type="text/javascript" src="js/plugins/prism/prism.js"></script>
     <!--scrollbar-->
     <script type="text/javascript" src="js/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>       
     <!--plugins.js - Some Specific JS codes for Plugin Settings-->

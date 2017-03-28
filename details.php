@@ -40,9 +40,7 @@ $username = $row['username'];
   <link href="css/custom/custom.min.css" type="text/css" rel="stylesheet" media="screen,projection">
 
   <!-- INCLUDED PLUGIN CSS ON THIS PAGE -->
-  <link href="js/plugins/prism/prism.css" type="text/css" rel="stylesheet" media="screen,projection">
   <link href="js/plugins/perfect-scrollbar/perfect-scrollbar.css" type="text/css" rel="stylesheet" media="screen,projection">
-  <link href="js/plugins/chartist-js/chartist.min.css" type="text/css" rel="stylesheet" media="screen,projection">
    <style type="text/css">
   .input-field div.error{
     position: relative;
@@ -106,7 +104,7 @@ $username = $row['username'];
                 <div class="nav-wrapper">
                     <ul class="left">                      
                       <li><h1 class="logo-wrapper"><a href="index.php" class="brand-logo darken-1"><img src="images/materialize-logo.png" alt="logo"></a> <span class="logo-text">Logo</span></h1></li>
-                    </ul>
+                    </ul>				
                 </div>
             </nav>
         </div>
@@ -159,11 +157,6 @@ $username = $row['username'];
 
         <!--breadcrumbs start-->
         <div id="breadcrumbs-wrapper">
-            <!-- Search for small screen -->
-            <div class="header-search-wrapper grey hide-on-large-only">
-                <i class="mdi-action-search active"></i>
-                <input type="text" name="Search" class="header-search-input z-depth-2" placeholder="Explore Materialize">
-            </div>
           <div class="container">
             <div class="row">
               <div class="col s12 m12 l12">
@@ -229,7 +222,7 @@ $username = $row['username'];
                       </div>					  
                       <div class="row">
                         <div class="input-field col s12">
-                          <i class="mdi-action-question-answer prefix"></i>
+                          <i class="mdi-action-home prefix"></i>
                           <textarea name="address" id="address" class="materialize-textarea validate" data-error=".errorTxt6"><?php echo $address;?></textarea>
                           <label for="address" class="">Address</label>
 						  <div class="errorTxt6"></div>
@@ -286,14 +279,10 @@ $username = $row['username'];
     <script type="text/javascript" src="js/plugins/angular.min.js"></script>
     <!--materialize js-->
     <script type="text/javascript" src="js/materialize.min.js"></script>
-    <!--prism -->
-    <script type="text/javascript" src="js/plugins/prism/prism.js"></script>
+
     <!--scrollbar-->
     <script type="text/javascript" src="js/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
-    <!-- chartist -->
-    <script type="text/javascript" src="js/plugins/chartist-js/chartist.min.js"></script>
-    
-    <!-- chartist -->
+
     <script type="text/javascript" src="js/plugins/jquery-validation/jquery.validate.min.js"></script>
     <script type="text/javascript" src="js/plugins/jquery-validation/additional-methods.min.js"></script>
     

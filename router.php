@@ -20,7 +20,6 @@ if($success == true)
 	$_SESSION['user_id'] = $user_id;
 	$_SESSION['role'] = $role;
 	$_SESSION['name'] = $name;
-	
 
 	header("location:admin-page.php");
 }
@@ -40,7 +39,7 @@ else
 		$_SESSION['customer_sid']=session_id();
 		$_SESSION['user_id'] = $user_id;
 		$_SESSION['role'] = $role;
-		$_SESSION['name'] = $name;	
+		$_SESSION['name'] = $name;			
 		header("location:index.php");
 	}
 	else

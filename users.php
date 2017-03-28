@@ -13,7 +13,7 @@ include 'connect.php';
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="msapplication-tap-highlight" content="no">
-  <title>Food Menu</title>
+  <title>User List</title>
 
   <!-- Favicons-->
   <link rel="icon" href="images/favicon/favicon-32x32.png" sizes="32x32">
@@ -31,7 +31,6 @@ include 'connect.php';
   <!-- Custome CSS-->    
   <link href="css/custom/custom.min.css" type="text/css" rel="stylesheet" media="screen,projection">
 
-  <!-- INCLUDED PLUGIN CSS ON THIS PAGE -->
   <link href="js/plugins/perfect-scrollbar/perfect-scrollbar.css" type="text/css" rel="stylesheet" media="screen,projection">
      <style type="text/css">
   .input-field div.error{
@@ -131,12 +130,12 @@ include 'connect.php';
                 </div>
             </div>
             </li>
-            <li class="bold active"><a href="index.php" class="waves-effect waves-cyan"><i class="mdi-editor-border-color"></i> Food Menu</a>
+            <li class="bold"><a href="index.php" class="waves-effect waves-cyan"><i class="mdi-editor-border-color"></i> Food Menu</a>
             </li>
             <li class="bold"><a href="all-orders.php" class="waves-effect waves-cyan"><i class="mdi-editor-insert-invitation"></i> Orders</a>
             </li>
-            <li class="bold"><a href="users.php" class="waves-effect waves-cyan"><i class="mdi-social-person"></i> Users</a>
-            </li>				
+            <li class="bold active"><a href="users.php" class="waves-effect waves-cyan"><i class="mdi-social-person"></i> Users</a>
+            </li>			
         </ul>
         <a href="#" data-activates="slide-out" class="sidebar-collapse btn-floating btn-medium waves-effect waves-light hide-on-large-only cyan"><i class="mdi-navigation-menu"></i></a>
         </aside>
@@ -152,7 +151,7 @@ include 'connect.php';
           <div class="container">
             <div class="row">
               <div class="col s12 m12 l12">
-                <h5 class="breadcrumbs-title">Food Menu</h5>
+                <h5 class="breadcrumbs-title">User List</h5>
               </div>
             </div>
           </div>
@@ -162,47 +161,61 @@ include 'connect.php';
 
         <!--start container-->
         <div class="container">
-          <p class="caption">Add, Edit or Remove Menu Items.</p>
+          <p class="caption">Enable, Disable or Verify Users.</p>
           <div class="divider"></div>
           <!--editableTable-->
           <div id="editableTable" class="section">
-		  <form class="formValidate" id="formValidate" method="post" action="menu-router.php" novalidate="novalidate">
+		  <form class="formValidate" id="formValidate1" method="post" action="user-router.php" novalidate="novalidate">
             <div class="row">
               <div class="col s12 m4 l3">
-                <h4 class="header">Order Food</h4>
+                <h4 class="header">List of users</h4>
               </div>
               <div>
 <table>
                     <thead>
                       <tr>
-                        <th data-field="id">Name</th>
-                        <th data-field="name">Item Price/Piece</th>
-                        <th data-field="price">Available</th>
+                        <th data-field="name">Name</th>
+                        <th data-field="price">Email</th>
+                        <th data-field="price">Contact</th>
+                        <th data-field="price">Address</th>	
+                        <th data-field="price">Role</th>
+                        <th data-field="price">Verified</th>
+                        <th data-field="price">Enable</th>
+                        <th data-field="price">Wallet</th>						
                       </tr>
                     </thead>
 
                     <tbody>
 				<?php
-				$result = mysqli_query($con, "SELECT * FROM items");
+				$result = mysqli_query($con, "SELECT * FROM users");
 				while($row = mysqli_fetch_array($result))
 				{
-					echo '<tr><td><div class="input-field col s12"><label for="'.$row["id"].'_name">Name</label>';
-					echo '<input value="'.$row["name"].'" id="'.$row["id"].'_name" name="'.$row['id'].'_name" type="text" data-error=".errorTxt'.$row["id"].'"><div class="errorTxt'.$row["id"].'"></div></td>';					
-					echo '<td><div class="input-field col s12 "><label for="'.$row["id"].'_price">Price</label>';
-					echo '<input value="'.$row["price"].'" id="'.$row["id"].'_price" name="'.$row['id'].'_price" type="text" data-error=".errorTxt'.$row["id"].'"><div class="errorTxt'.$row["id"].'"></div></td>';                   
-					echo '<td>';
-					if($row['deleted'] == 0){
-						$text1 = 'selected';
-						$text2 = '';
+					echo '<tr><td>'.$row["name"].'</td>';
+					echo '<td>'.$row["email"].'</td>';
+					echo '<td>'.$row["contact"].'</td>';   
+					echo '<td>'.$row["address"].'</td>';      					
+					echo '<td><select name="'.$row['id'].'_role">
+                      <option value="Administrator"'.($row['role']=='Administrator' ? 'selected' : '').'>Administrator</option>
+                      <option value="Customer"'.($row['role']=='Customer' ? 'selected' : '').'>Customer</option>
+                    </select></td>';
+					echo '<td><select name="'.$row['id'].'_verified">
+                      <option value="1"'.($row['verified'] ? 'selected' : '').'>Verified</option>
+                      <option value="0"'.(!$row['verified'] ? 'selected' : '').'>Not Verified</option>
+                    </select></td>';	
+					echo '<td><select name="'.$row['id'].'_deleted">
+                      <option value="1"'.($row['deleted'] ? 'selected' : '').'>Disable</option>
+                      <option value="0"'.(!$row['deleted'] ? 'selected' : '').'>Enable</option>
+                    </select></td>';
+					$key = $row['id'];
+					$sql = mysqli_query($con,"SELECT * from wallet WHERE customer_id = $key;");
+					if($row1 = mysqli_fetch_array($sql)){
+						$wallet_id = $row1['id'];
+						$sql1 = mysqli_query($con,"SELECT * from wallet_details WHERE wallet_id = $wallet_id;");
+						if($row2 = mysqli_fetch_array($sql1)){
+							$balance = $row2['balance'];
+						}
 					}
-					else{
-						$text1 = '';
-						$text2 = 'selected';						
-					}
-					echo '<select name="'.$row['id'].'_hide">
-                      <option value="1"'.$text1.'>Available</option>
-                      <option value="2"'.$text2.'>Not Available</option>
-                    </select></td></tr>';
+					echo '<td><label for="balance">Balance</label><input id="balance" name="'.$row['id'].'_balance" value="'.$balance.'" type="number" data-error=".errorTxt01"><div class="errorTxt01"></div></td></tr>'; 					
 				}
 				?>
                     </tbody>
@@ -215,27 +228,47 @@ include 'connect.php';
                             </div>
             </div>
 			</form>
-		  <form class="formValidate" id="formValidate1" method="post" action="add-item.php" novalidate="novalidate">
+		  <form class="formValidate" id="formValidate" method="post" action="add-users.php" novalidate="novalidate">
             <div class="row">
               <div class="col s12 m4 l3">
-                <h4 class="header">Add Item</h4>
+                <h4 class="header">Add User</h4>
               </div>
               <div>
 <table>
                     <thead>
                       <tr>
-                        <th data-field="id">Name</th>
-                        <th data-field="name">Item Price/Piece</th>
+                        <th data-field="name">Username</th>
+                        <th data-field="name">Password</th>							
+                        <th data-field="name">Name</th>
+                        <th data-field="price">Email</th>
+                        <th data-field="price">Phone number</th>
+                        <th data-field="price">Address</th>	
+                        <th data-field="price">Role</th>
+                        <th data-field="price">Verified</th>
+                        <th data-field="price">Enable</th>		
                       </tr>
                     </thead>
 
                     <tbody>
 				<?php
-					echo '<tr><td><div class="input-field col s12"><label for="name">Name</label>';
-					echo '<input id="name" name="name" type="text" data-error=".errorTxt01"><div class="errorTxt01"></div></td>';					
-					echo '<td><div class="input-field col s12 "><label for="price" class="">Price</label>';
-					echo '<input id="price" name="price" type="text" data-error=".errorTxt02"><div class="errorTxt02"></div></td>';                   
-					echo '<td></tr>';
+					echo '<tr><td><label for="username">Username</label><input id="username" name="username" type="text" data-error=".errorTxt02"><div class="errorTxt02"></div></td>';   									
+					echo '<td><label for="password">Password</label><input id="password" name="password" type="password" data-error=".errorTxt03"><div class="errorTxt03"></div></td>';   									
+					echo '<td><label for="name">Name</label><input id="name" name="name" type="text" data-error=".errorTxt04"><div class="errorTxt04"></div></td>';
+					echo '<td><label for="email">Email</label><input id="email" name="email" type="email"></td>';
+					echo '<td><label for="contact">Phone number</label><input id="contact" name="contact" type="number" data-error=".errorTxt05"><div class="errorTxt05"></div></td>';   
+					echo '<td><label for="address">Address</label><input id="address" name="address" type="text" data-error=".errorTxt06"><div class="errorTxt06"></div></td>';   
+					echo '<td><select name="role">
+                      <option value="Administrator">Administrator</option>
+                      <option value="Customer" selected>Customer</option>
+                    </select></td>';
+					echo '<td><select name="verified">
+                      <option value="1">Verified</option>
+                      <option value="0" selected>Not Verified</option>
+                    </select></td>';	
+					echo '<td><select name="deleted">
+                      <option value="1">Disable</option>
+                      <option value="0" selected>Enable</option>
+                    </select></td></tr>';					
 				?>
                     </tbody>
 </table>
@@ -292,48 +325,63 @@ include 'connect.php';
     <script type="text/javascript" src="js/materialize.min.js"></script>
     <!--scrollbar-->
     <script type="text/javascript" src="js/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
-    
-    <script type="text/javascript" src="js/plugins/jquery-validation/jquery.validate.min.js"></script>
+	<script type="text/javascript" src="js/plugins/jquery-validation/jquery.validate.min.js"></script>
     <script type="text/javascript" src="js/plugins/jquery-validation/additional-methods.min.js"></script>
-    
+    	
+	
     <!--plugins.js - Some Specific JS codes for Plugin Settings-->
     <script type="text/javascript" src="js/plugins.min.js"></script>
     <!--custom-script.js - Add your own theme custom JS-->
-    <script type="text/javascript" src="js/custom-script.js"></script>
-	    <script type="text/javascript">
+    <script type="text/javascript" src="js/custom-script.js">
     $("#formValidate").validate({
         rules: {
-			<?php
-			$result = mysqli_query($con, "SELECT * FROM items");
-			while($row = mysqli_fetch_array($result))
-			{
-				echo $row["id"].'_name:{
-				required: true,
-				minlength: 5
-				},';
-				echo $row["id"].'_price:{
-				required: true,	
-				min: 0
-				},';				
-			}
-		echo '},';
-		?>
+            username: {
+                required: true,
+                minlength: 5,
+            },
+            password: {
+                required: true,
+                minlength: 5,
+            },
+            name: {
+                required: true,
+                minlength: 5,
+			},
+            contact: {
+                required: true,
+                minlength: 4,
+			},
+            address: {
+                minlength: 10,
+			},		
+            balance: {
+                required: true,
+			},				
+		},
         messages: {
-			<?php
-			$result = mysqli_query($con, "SELECT * FROM items");
-			while($row = mysqli_fetch_array($result))
-			{  
-				echo $row["id"].'_name:{
-				required: "Ener item name",
-				minlength: "Minimum length is 5 characters"
-				},';
-				echo $row["id"].'_price:{
-				required: "Ener price of item",
-				min: "Minimum item price is Rs. 0"
-				},';				
-			}
-		echo '},';
-		?>
+           username:{
+                required: "Enter a username",
+                minlength: "Enter at least 5 characters"
+            },	
+           password:{
+                required: "Provide a prove",
+                minlength: "Password must be atleast 5 characters long",
+            },	
+           name:{
+                required: "Please provide CVV number",
+                minlength: "Enter at least 5 characters",		
+            },	
+           contact:{
+                required: "Please provide card number",
+                minlength: "Enter at least 4 digits",
+            },	
+           address:{
+                minlength: "Address must be atleast 10 characters long",		
+            },		
+           balance:{
+                required: "Please provide a balance.",		
+            },				
+		},
         errorElement : 'div',
         errorPlacement: function(error, element) {
           var placement = $(element).data('error');
@@ -343,40 +391,7 @@ include 'connect.php';
             error.insertAfter(element);
           }
         }
-     });
-    </script>
-    <script type="text/javascript">
-    $("#formValidate1").validate({
-        rules: {
-		name: {
-				required: true,
-				minlength: 5
-			},
-		price: {
-				required: true,
-				min: 0
-			},
-	},
-        messages: {
-		name: {
-				required: "Enter item name",
-				minlength: "Minimum length is 5 characters"
-			},
-		 price: {
-				required: "Enter item price",
-				minlength: "Minimum item price is Rs.0"
-			},
-	},
-		errorElement : 'div',
-        errorPlacement: function(error, element) {
-          var placement = $(element).data('error');
-          if (placement) {
-            $(placement).append(error)
-          } else {
-            error.insertAfter(element);
-          }
-        }
-     });
+     }); 
     </script>
 </body>
 

@@ -1,6 +1,6 @@
 <?php
 include 'connect.php';
-
+include 'wallet.php';
 
 	if($_SESSION['customer_sid']==session_id())
 	{
@@ -32,9 +32,7 @@ include 'connect.php';
   <link href="css/custom/custom.min.css" type="text/css" rel="stylesheet" media="screen,projection">
 
   <!-- INCLUDED PLUGIN CSS ON THIS PAGE -->
-  <link href="js/plugins/prism/prism.css" type="text/css" rel="stylesheet" media="screen,projection">
   <link href="js/plugins/perfect-scrollbar/perfect-scrollbar.css" type="text/css" rel="stylesheet" media="screen,projection">
-  <link href="js/plugins/chartist-js/chartist.min.css" type="text/css" rel="stylesheet" media="screen,projection">
    <style type="text/css">
   .input-field div.error{
     position: relative;
@@ -99,6 +97,10 @@ include 'connect.php';
                     <ul class="left">                      
                       <li><h1 class="logo-wrapper"><a href="index.php" class="brand-logo darken-1"><img src="images/materialize-logo.png" alt="logo"></a> <span class="logo-text">Logo</span></h1></li>
                     </ul>
+                    <ul class="right hide-on-med-and-down">                        
+                        <li><a href="#" class="waves-effect waves-block waves-light"><i class="mdi-editor-attach-money"><?php echo $balance;?></i></a>
+                        </li>
+                    </ul>					
                 </div>
             </nav>
         </div>
@@ -151,11 +153,6 @@ include 'connect.php';
 
         <!--breadcrumbs start-->
         <div id="breadcrumbs-wrapper">
-            <!-- Search for small screen -->
-            <div class="header-search-wrapper grey hide-on-large-only">
-                <i class="mdi-action-search active"></i>
-                <input type="text" name="Search" class="header-search-input z-depth-2" placeholder="Explore Materialize">
-            </div>
           <div class="container">
             <div class="row">
               <div class="col s12 m12 l12">
@@ -173,7 +170,7 @@ include 'connect.php';
           <div class="divider"></div>
           <!--editableTable-->
           <div id="editableTable" class="section">
-		  <form class="formValidate" id="formValidate" method="post" action="order-router.php" novalidate="novalidate">
+		  <form class="formValidate" id="formValidate" method="post" action="place-order.php" novalidate="novalidate">
             <div class="row">
               <div class="col s12 m4 l3">
                 <h4 class="header">Order Food</h4>
@@ -249,14 +246,9 @@ include 'connect.php';
     <script type="text/javascript" src="js/plugins/angular.min.js"></script>
     <!--materialize js-->
     <script type="text/javascript" src="js/materialize.min.js"></script>
-    <!--prism -->
-    <script type="text/javascript" src="js/plugins/prism/prism.js"></script>
     <!--scrollbar-->
     <script type="text/javascript" src="js/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
-    <!-- chartist -->
-    <script type="text/javascript" src="js/plugins/chartist-js/chartist.min.js"></script>
-    
-    <!-- chartist -->
+
     <script type="text/javascript" src="js/plugins/jquery-validation/jquery.validate.min.js"></script>
     <script type="text/javascript" src="js/plugins/jquery-validation/additional-methods.min.js"></script>
     

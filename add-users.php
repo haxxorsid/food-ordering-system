@@ -1,9 +1,5 @@
 <?php
 include 'connect.php';
-$name = $_POST['name'];
-$username = $_POST['username'];
-$password = $_POST['password'];
-$phone = $_POST['phone'];
 
 function number($length) {
     $result = '';
@@ -15,7 +11,16 @@ function number($length) {
     return $result;
 }
 
-$sql = "INSERT INTO users (name, username, password, contact) VALUES ('$name', '$username', '$password', $phone);";
+$username = $_POST['username'];
+$password = $_POST['password'];
+$name = $_POST['name'];
+$email = $_POST['email'];
+$contact = $_POST['contact'];
+$address = $_POST['address'];
+$role = $_POST['role'];
+$verified = $_POST['verified'];
+$deleted = $_POST['deleted'];
+$sql = "INSERT INTO users (username, password, name, email, contact, address, role, verified, deleted) VALUES ('$username', '$password', '$name', '$email', $contact, '$address', '$role', $verified, $deleted)";
 if($con->query($sql)==true){
 $user_id =  $con->insert_id;
 $sql = "INSERT INTO wallet(customer_id) VALUES ($user_id)";
@@ -25,7 +30,7 @@ if($con->query($sql)==true){
 	$cvv_number = number(3);
 	$sql = "INSERT INTO wallet_details(wallet_id, number, cvv) VALUES ($wallet_id, $cc_number, $cvv_number)";
 	$con->query($sql);
+}	
 }
-}
-header("location:login.php");
+header("location:users.php");
 ?>

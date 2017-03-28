@@ -1,11 +1,37 @@
 <?php
 include 'connect.php';
 include 'wallet.php';
+$continue=1;
 $total = 0;
+if($_SESSION['customer_sid']==session_id())
+{
+		if($_POST['payment_type'] == 'Wallet'){
+		$_POST['cc_number'] = str_replace('-', '', $_POST['cc_number']);
+		$_POST['cc_number'] = str_replace(' ', '', $_POST['cc_number']); 
+		$_POST['cvv_number'] = (int)str_replace('-', '', $_POST['cvv_number']);
+		$sql1 = mysqli_query($con, "SELECT * FROM wallet_details where wallet_id = $wallet_id");
+		while($row1 = mysqli_fetch_array($sql1)){
+			$card = $row1['number'];
+			$cvv = $row1['cvv'];
+			if($card == $_POST['cc_number'] && $cvv==$_POST['cvv_number'])
+			$continue=1;
+			else
+				header("location:index.php");
+		}
+		}
+		else
+			$continue=1;
+}
 
-	if($_SESSION['customer_sid']==session_id())
-	{
-		?>
+$result = mysqli_query($con, "SELECT * FROM users where id = $user_id");
+while($row = mysqli_fetch_array($result)){
+	$name = $row['name'];
+	$contact = $row['contact'];
+}
+
+if($continue){
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -14,7 +40,7 @@ $total = 0;
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="msapplication-tap-highlight" content="no">
-  <title>Past Orders</title>
+  <title>Provide Order Details</title>
 
   <!-- Favicons-->
   <link rel="icon" href="images/favicon/favicon-32x32.png" sizes="32x32">
@@ -32,9 +58,8 @@ $total = 0;
   <!-- Custome CSS-->    
   <link href="css/custom/custom.min.css" type="text/css" rel="stylesheet" media="screen,projection">
 
-  <!-- INCLUDED PLUGIN CSS ON THIS PAGE -->
   <link href="js/plugins/perfect-scrollbar/perfect-scrollbar.css" type="text/css" rel="stylesheet" media="screen,projection">
-  
+
 </head>
 
 <body>
@@ -58,9 +83,9 @@ $total = 0;
                       <li><h1 class="logo-wrapper"><a href="index.php" class="brand-logo darken-1"><img src="images/materialize-logo.png" alt="logo"></a> <span class="logo-text">Logo</span></h1></li>
                     </ul>
                     <ul class="right hide-on-med-and-down">                        
-                        <li><a href="#"  class="waves-effect waves-block waves-light"><i class="mdi-editor-attach-money"><?php echo $balance;?></i></a>
+                        <li><a href="#" class="waves-effect waves-block waves-light"><i class="mdi-editor-attach-money"><?php echo $balance;?></i></a>
                         </li>
-                    </ul>						
+                    </ul>					
                 </div>
             </nav>
         </div>
@@ -97,7 +122,7 @@ $total = 0;
             </li>
             <li class="bold"><a href="index.php" class="waves-effect waves-cyan"><i class="mdi-editor-border-color"></i> Order Food</a>
             </li>
-            <li class="bold  active"><a href="orders.php" class="waves-effect waves-cyan"><i class="mdi-editor-insert-invitation"></i> Past Orders</a>
+            <li class="bold"><a href="orders.php" class="waves-effect waves-cyan"><i class="mdi-editor-insert-invitation"></i> Past Orders</a>
             </li>
             <li class="bold"><a href="details.php" class="waves-effect waves-cyan"><i class="mdi-social-person"></i> Edit Details</a>
             </li>				
@@ -116,7 +141,7 @@ $total = 0;
           <div class="container">
             <div class="row">
               <div class="col s12 m12 l12">
-                <h5 class="breadcrumbs-title">Past Orders</h5>
+                <h5 class="breadcrumbs-title">Provide Order Details</h5>
               </div>
             </div>
           </div>
@@ -126,81 +151,100 @@ $total = 0;
 
         <!--start container-->
         <div class="container">
-          <p class="caption">List of your past orders with details</p>
+          <p class="caption">Receipt</p>
           <div class="divider"></div>
           <!--editableTable-->
 <div id="work-collections" class="seaction">
-             
-					<?php 
-					$sql = mysqli_query($con, "SELECT * FROM orders WHERE customer_id = $user_id;");
-					echo '              <div class="row">
-                <div>
-                    <h4 class="header">List</h4>
-                    <ul id="issues-collection" class="collection">';
-					while($row = mysqli_fetch_array($sql))
-					{
-						$status = $row['status'];
-						echo '<li class="collection-item avatar">
-                              <i class="mdi-content-content-paste red circle"></i>
-                              <span class="collection-header">Order No. '.$row['id'].'</span>
-                              <p><strong>Date:</strong> '.$row['date'].'</p>
-                              <p><strong>Payment Type:</strong> '.$row['payment_type'].'</p>							  							  
-                              <p><strong>Status:</strong> '.($status=='Paused' ? 'Paused <a  data-position="bottom" data-delay="50" data-tooltip="Please contact administrator for further details." class="btn-floating waves-effect waves-light tooltipped cyan">    ?</a>' : $status).'</p>							  
-                              <a href="#" class="secondary-content"><i class="mdi-action-grade"></i></a>
-                              </li>';
-						$order_id = $row['id'];
-						$sql1 = mysqli_query($con, "SELECT * FROM order_details WHERE order_id = $order_id;");
-						while($row1 = mysqli_fetch_array($sql1))
-						{
-							$item_id = $row1['item_id'];
-							$sql2 = mysqli_query($con, "SELECT * FROM items WHERE id = $item_id;");
-							while($row2 = mysqli_fetch_array($sql2)){
-								$item_name = $row2['name'];
-							}
-							echo '<li class="collection-item">
-                            <div class="row">
-                            <div class="col s7">
-                            <p class="collections-title"><strong>#'.$row1['item_id'].'</strong> '.$item_name.'</p>
-                            </div>
-                            <div class="col s2">
-                            <span>'.$row1['quantity'].' Pieces</span>
-                            </div>
-                            <div class="col s3">
-                            <span>Rs. '.$row1['price'].'</span>
-                            </div>
-                            </div>
-                            </li>';
-							$id = $row1['order_id'];
-							$total = $total + $row1['price'];
-						}
-								echo'<li class="collection-item">
-                                        <div class="row">
-                                            <div class="col s7">
-                                                <p class="collections-title"> Total</p>
-                                            </div>
-                                            <div class="col s2">
-											<span> </span>
-                                            </div>
-                                            <div class="col s3">
-                                                <span><strong>Rs. '.$row['total'].'</strong></span>
-                                            </div>';
-								if(!preg_match('/^Cancelled/', $status)){
-									if($status != 'Delivered'){
-								echo '<form action="cancel-order.php" method="post">
-										<input type="hidden" value="'.$id.'" name="id">
-										<input type="hidden" value="Cancelled by Customer" name="status">	
-										<input type="hidden" value="'.$row['payment_type'].'" name="payment_type">											
-										<button class="btn waves-effect waves-light right submit" type="submit" name="action">Cancel Order
-                                              <i class="mdi-content-clear right"></i> 
-										</button>
-										</form>';
-								}
-								}
-								echo'</div></li>';
+<div class="row">
+<div>
+<ul id="issues-collection" class="collection">
+<?php
+    echo '<li class="collection-item avatar">
+        <i class="mdi-content-content-paste red circle"></i>
+        <p><strong>Name:</strong>'.$name.'</p>
+		<p><strong>Contact Number:</strong> '.$contact.'</p>
+		<p><strong>Address:</strong> '.$_POST['address'].'</p>	
+		<p><strong>Payment Type:</strong> '.$_POST['payment_type'].'</p>			
+        <a href="#" class="secondary-content"><i class="mdi-action-grade"></i></a>';
+		
+	foreach ($_POST as $key => $value)
+	{
+		if(is_numeric($key)){		
+		$result = mysqli_query($con, "SELECT * FROM items WHERE id = $key");
+		while($row = mysqli_fetch_array($result))
+		{
+			$price = $row['price'];
+			$item_name = $row['name'];
+			$item_id = $row['id'];
+		}
+			$price = $value*$price;
+			    echo '<li class="collection-item">
+        <div class="row">
+            <div class="col s7">
+                <p class="collections-title"><strong>#'.$item_id.' </strong>'.$item_name.'</p>
+            </div>
+            <div class="col s2">
+                <span>'.$value.' Pieces</span>
+            </div>
+            <div class="col s3">
+                <span>Rs. '.$price.'</span>
+            </div>
+        </div>
+    </li>';
+		$total = $total + $price;
+	}
+	}
+    echo '<li class="collection-item">
+        <div class="row">
+            <div class="col s7">
+                <p class="collections-title"> Total</p>
+            </div>
+            <div class="col s2">
+                <span>&nbsp;</span>
+            </div>
+            <div class="col s3">
+                <span><strong>Rs. '.$total.'</strong></span>
+            </div>
+        </div>
+    </li>';
+	if($_POST['payment_type'] == 'Wallet')
+	echo '<div id="basic-collections" class="section">
+		<div class="row">
+			<div class="collection">
+				<a href="#" class="collection-item">
+					<div class="row"><div class="col s7">Current Balance</div><div class="col s3">'.$balance.'</div></div>
+				</a>
+				<a href="#" class="collection-item active">
+					<div class="row"><div class="col s7">Balance after purchase</div><div class="col s3">'.($balance-$total).'</div></div>
+				</a>
+			</div>
+		</div>
+	</div>';
+?>
+<form action="order-router.php" method="post">
+<?php
+foreach ($_POST as $key => $value)
+{
+	if(is_numeric($key)){
+		echo '<input type="hidden" name="'.$key.'" value="'.$value.'">';
+	}
+}
+?>
+<input type="hidden" name="payment_type" value="<?php echo $_POST['payment_type'];?>">
+<input type="hidden" name="address" value="<?php echo $_POST['address'];?>">
+<?php if($_POST['payment_type'] == 'Wallet') echo '<input type="hidden" name="balance" value="<?php echo ($balance-$total);?>">'; ?>
+<input type="hidden" name="total" value="<?php echo $total;?>">
+<div class="input-field col s12">
+<button class="btn cyan waves-effect waves-light right" type="submit" name="action" <?php if($_POST['payment_type'] == 'Wallet') {if ($balance-$total < 0) {echo 'disabled'; }}?>>Confirm Order
+<i class="mdi-content-send right"></i>
+</button>
+</div>
+</form>
+</ul>
 
-					}
-					?>
-					 </ul>
+
+                </div>
+				</div>
                 </div>
               </div>
             </div>
@@ -243,7 +287,7 @@ $total = 0;
     <!--materialize js-->
     <script type="text/javascript" src="js/materialize.min.js"></script>
     <!--scrollbar-->
-    <script type="text/javascript" src="js/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>       
+    <script type="text/javascript" src="js/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script> 
     <!--plugins.js - Some Specific JS codes for Plugin Settings-->
     <script type="text/javascript" src="js/plugins.min.js"></script>
     <!--custom-script.js - Add your own theme custom JS-->
@@ -257,7 +301,7 @@ $total = 0;
 	{
 		if($_SESSION['admin_sid']==session_id())
 		{
-			header("location:all-orders.php");		
+			header("location:admin-page.php");		
 		}
 		else{
 			header("location:login.php");
