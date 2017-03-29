@@ -97,8 +97,32 @@ $total = 0;
             </li>
             <li class="bold"><a href="index.php" class="waves-effect waves-cyan"><i class="mdi-editor-border-color"></i> Order Food</a>
             </li>
-            <li class="bold  active"><a href="orders.php" class="waves-effect waves-cyan"><i class="mdi-editor-insert-invitation"></i> Past Orders</a>
-            </li>
+                <li class="no-padding">
+                    <ul class="collapsible collapsible-accordion">
+                        <li class="bold"><a class="collapsible-header waves-effect waves-cyan active"><i class="mdi-editor-insert-invitation"></i> Orders</a>
+                            <div class="collapsible-body">
+                                <ul>
+								<li class="<?php
+								if(!isset($_GET['status'])){
+										echo 'active';
+									}?>
+									"><a href="orders.php">All Orders</a>
+                                </li>
+								<?php
+									$sql = mysqli_query($con, "SELECT DISTINCT status FROM orders  WHERE customer_id = $user_id;;");
+									while($row = mysqli_fetch_array($sql)){
+									if(isset($_GET['status'])){
+										$status = $row['status'];
+									}
+                                    echo '<li class='.(isset($_GET['status'])?($status == $_GET['status'] ? 'active' : ''): '').'><a href="orders.php?status='.$row['status'].'">'.$row['status'].'</a>
+                                    </li>';
+									}
+									?>
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+                </li>
             <li class="bold"><a href="details.php" class="waves-effect waves-cyan"><i class="mdi-social-person"></i> Edit Details</a>
             </li>				
         </ul>
@@ -131,8 +155,14 @@ $total = 0;
           <!--editableTable-->
 <div id="work-collections" class="seaction">
              
-					<?php 
-					$sql = mysqli_query($con, "SELECT * FROM orders WHERE customer_id = $user_id;");
+					<?php
+					if(isset($_GET['status'])){
+						$status = $_GET['status'];
+					}
+					else{
+						$status = '%';
+					}
+					$sql = mysqli_query($con, "SELECT * FROM orders WHERE customer_id = $user_id AND status LIKE '$status';;");
 					echo '              <div class="row">
                 <div>
                     <h4 class="header">List</h4>

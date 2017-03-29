@@ -141,8 +141,25 @@ $username = $row['username'];
             </li>
             <li class="bold"><a href="index.php" class="waves-effect waves-cyan"><i class="mdi-editor-border-color"></i> Order Food</a>
             </li>
-            <li class="bold"><a href="orders.php" class="waves-effect waves-cyan"><i class="mdi-editor-insert-invitation"></i> Past Orders</a>
-            </li>
+                <li class="no-padding">
+                    <ul class="collapsible collapsible-accordion">
+                        <li class="bold"><a class="collapsible-header waves-effect waves-cyan"><i class="mdi-editor-insert-invitation"></i> Orders</a>
+                            <div class="collapsible-body">
+                                <ul>
+								<li><a href="orders.php">All Orders</a>
+                                </li>
+								<?php
+									$sql = mysqli_query($con, "SELECT DISTINCT status FROM orders WHERE customer_id = $user_id;");
+									while($row = mysqli_fetch_array($sql)){
+                                    echo '<li><a href="orders.php?status='.$row['status'].'">'.$row['status'].'</a>
+                                    </li>';
+									}
+									?>
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+                </li>
             <li class="bold active"><a href="details.php" class="waves-effect waves-cyan"><i class="mdi-social-person"></i> Edit Details</a>
             </li>			
         </ul>

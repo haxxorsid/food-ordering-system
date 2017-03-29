@@ -132,8 +132,25 @@ include 'includes/connect.php';
             </li>
             <li class="bold"><a href="index.php" class="waves-effect waves-cyan"><i class="mdi-editor-border-color"></i> Food Menu</a>
             </li>
-            <li class="bold"><a href="all-orders.php" class="waves-effect waves-cyan"><i class="mdi-editor-insert-invitation"></i> Orders</a>
-            </li>
+                <li class="no-padding">
+                    <ul class="collapsible collapsible-accordion">
+                        <li class="bold"><a class="collapsible-header waves-effect waves-cyan"><i class="mdi-editor-insert-invitation"></i> Orders</a>
+                            <div class="collapsible-body">
+                                <ul>
+								<li><a href="all-orders.php">All Orders</a>
+                                </li>
+								<?php
+									$sql = mysqli_query($con, "SELECT DISTINCT status FROM orders;");
+									while($row = mysqli_fetch_array($sql)){
+                                    echo '<li><a href="all-orders.php?status='.$row['status'].'">'.$row['status'].'</a>
+                                    </li>';
+									}
+									?>
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+                </li>
             <li class="bold active"><a href="users.php" class="waves-effect waves-cyan"><i class="mdi-social-person"></i> Users</a>
             </li>			
         </ul>
