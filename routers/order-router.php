@@ -2,10 +2,11 @@
 include '../includes/connect.php';
 include '../includes/wallet.php';
 $total = 0;
-$address = $_POST['address'];
+$address = htmlspecialchars($_POST['address']);
+$description =  htmlspecialchars($_POST['description']);
 $payment_type = $_POST['payment_type'];
 $total = $_POST['total'];
-	$sql = "INSERT INTO orders (customer_id, payment_type, address, total) VALUES ($user_id, '$payment_type', '$address', $total)";
+	$sql = "INSERT INTO orders (customer_id, payment_type, address, total, description) VALUES ($user_id, '$payment_type', '$address', $total, '$description')";
 	if ($con->query($sql) === TRUE){
 		$order_id =  $con->insert_id;
 		foreach ($_POST as $key => $value)

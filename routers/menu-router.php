@@ -4,6 +4,7 @@ include '../includes/connect.php';
 	{
 		if(preg_match("/[0-9]+_name/",$key)){
 			$key = strtok($key, '_');
+			$value = htmlspecialchars($value);
 			$sql = "UPDATE items SET name = '$value' WHERE id = $key;";
 			$con->query($sql);
 		}

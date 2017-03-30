@@ -1,7 +1,6 @@
 <?php
 include 'includes/connect.php';
 include 'includes/wallet.php';
-$total = 0;
 
 	if($_SESSION['customer_sid']==session_id())
 	{
@@ -174,7 +173,8 @@ $total = 0;
                               <i class="mdi-content-content-paste red circle"></i>
                               <span class="collection-header">Order No. '.$row['id'].'</span>
                               <p><strong>Date:</strong> '.$row['date'].'</p>
-                              <p><strong>Payment Type:</strong> '.$row['payment_type'].'</p>							  							  
+                              <p><strong>Payment Type:</strong> '.$row['payment_type'].'</p>
+							  <p><strong>Address: </strong>'.$row['address'].'</p>							  
                               <p><strong>Status:</strong> '.($status=='Paused' ? 'Paused <a  data-position="bottom" data-delay="50" data-tooltip="Please contact administrator for further details." class="btn-floating waves-effect waves-light tooltipped cyan">    ?</a>' : $status).'</p>							  
                               <a href="#" class="secondary-content"><i class="mdi-action-grade"></i></a>
                               </li>';
@@ -201,7 +201,6 @@ $total = 0;
                             </div>
                             </li>';
 							$id = $row1['order_id'];
-							$total = $total + $row1['price'];
 						}
 								echo'<li class="collection-item">
                                         <div class="row">
@@ -213,7 +212,13 @@ $total = 0;
                                             </div>
                                             <div class="col s3">
                                                 <span><strong>Rs. '.$row['total'].'</strong></span>
-                                            </div>';
+                                            </div></div></li>';
+									if(!empty($row['description'])){
+									echo '<li class="collection-item"><div class="row"><p><strong>Note: </strong>'.$row['description'].'</p>';
+									}
+									else{
+										echo '<div class="row">';
+									}
 								if(!preg_match('/^Cancelled/', $status)){
 									if($status != 'Delivered'){
 								echo '<form action="routers/cancel-order.php" method="post">

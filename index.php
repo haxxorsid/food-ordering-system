@@ -216,6 +216,12 @@ include 'includes/wallet.php';
 </table>
               </div>
 			  <div class="input-field col s12">
+              <i class="mdi-editor-mode-edit prefix"></i>
+              <textarea id="description" name="description" class="materialize-textarea"></textarea>
+              <label for="description" class="">Any note(optional)</label>
+			  </div>
+			  <div>
+			  <div class="input-field col s12">
                               <button class="btn cyan waves-effect waves-light right" type="submit" name="action">Order
                                 <i class="mdi-content-send right"></i>
                               </button>

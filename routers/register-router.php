@@ -1,8 +1,8 @@
 <?php
 include '../includes/connect.php';
-$name = $_POST['name'];
-$username = $_POST['username'];
-$password = $_POST['password'];
+$name = htmlspecialchars($_POST['name']);
+$username = htmlspecialchars($_POST['username']);
+$password = htmlspecialchars($_POST['password']);
 $phone = $_POST['phone'];
 
 function number($length) {

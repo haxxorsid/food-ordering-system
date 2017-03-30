@@ -1,8 +1,5 @@
 <?php
 include 'includes/connect.php';
-$total = 0;
-
-
 	if($_SESSION['admin_sid']==session_id())
 	{
 		?>
@@ -193,7 +190,7 @@ $total = 0;
 							echo '<li class="collection-item">
                             <div class="row">
 							<p><strong>Name: </strong>'.$row3['name'].'</p>
-							'.($row3['address'] == '' ? '' : '<p><strong>Address: </strong>'.$row3['address'].'</p>').'	
+							<p><strong>Address: </strong>'.$row['address'].'</p>
 							'.($row3['contact'] == '' ? '' : '<p><strong>Contact: </strong>'.$row3['contact'].'</p>').'	
 							'.($row3['email'] == '' ? '' : '<p><strong>Email: </strong>'.$row3['email'].'</p>').'							
                             </li>';								
@@ -217,7 +214,6 @@ $total = 0;
                             </div>
                             </div>
                             </li>';
-							$total = $total + $row1['price'];
 						}
 								echo'<li class="collection-item">
                                         <div class="row">
@@ -229,7 +225,13 @@ $total = 0;
                                             </div>
                                             <div class="col s3">
                                                 <span><strong>Rs. '.$row['total'].'</strong></span>
-                                            </div>';
+                                            </div></div></li>';
+									if(!empty($row['description'])){
+									echo '<li class="collection-item"><div class="row"><p><strong>Note: </strong>'.$row['description'].'</p>';
+									}
+									else{
+										echo '<div class="row">';
+									}											
 								if(!$deleted){
 								echo '<button class="btn waves-effect waves-light right submit" type="submit" name="action">Change Status
                                               <i class="mdi-content-clear right"></i> 

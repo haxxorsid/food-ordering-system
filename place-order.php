@@ -279,7 +279,7 @@ $verified = $row['verified'];
 		
 	foreach ($_POST as $key => $value)
 	{
-		if($key == 'action'){
+		if($key == 'action' || $key == 'description'){
 			break;
 		}
 		$result = mysqli_query($con, "SELECT * FROM items WHERE id = $key");
@@ -318,6 +318,8 @@ $verified = $row['verified'];
             </div>
         </div>
     </li>';
+		if(!empty($_POST['description']))
+		echo '<li class="collection-item avatar"><p><strong>Note: </strong>'.htmlspecialchars($_POST['description']).'</p></li>';
 ?>
 </ul>
 

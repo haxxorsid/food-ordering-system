@@ -1,5 +1,5 @@
 <?php
-include 'connect.php';
+include '../includes/connect.php';
 $success=false;
 
 $username = $_POST['username'];
@@ -21,7 +21,7 @@ if($success == true)
 	$_SESSION['role'] = $role;
 	$_SESSION['name'] = $name;
 
-	header("location:admin-page.php");
+	header("location: ../admin-page.php");
 }
 else
 {
@@ -40,11 +40,11 @@ else
 		$_SESSION['user_id'] = $user_id;
 		$_SESSION['role'] = $role;
 		$_SESSION['name'] = $name;			
-		header("location:index.php");
+		header("location: ../index.php");
 	}
 	else
 	{
-		header("location:login.php");
+		header("location: ../login.php");
 	}
 }
 ?>

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 28, 2017 at 04:39 PM
+-- Generation Time: Mar 30, 2017 at 10:01 AM
 -- Server version: 10.1.21-MariaDB
 -- PHP Version: 5.6.30
 
@@ -41,7 +41,8 @@ INSERT INTO `items` (`id`, `name`, `price`, `deleted`) VALUES
 (1, 'Item 1', 20, 1),
 (2, 'Item 2', 45, 0),
 (3, 'Item 3', 20, 0),
-(4, 'Item 4', 15, 1);
+(4, 'Item 4', 15, 1),
+(5, 'Item 5', 20, 0);
 
 -- --------------------------------------------------------
 
@@ -53,8 +54,9 @@ CREATE TABLE `orders` (
   `id` int(11) NOT NULL,
   `customer_id` int(11) NOT NULL,
   `address` varchar(300) NOT NULL,
+  `description` varchar(300) NOT NULL,
   `date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `payment_type` varchar(6) NOT NULL DEFAULT 'Wallet',
+  `payment_type` varchar(16) NOT NULL DEFAULT 'Wallet',
   `total` int(11) NOT NULL,
   `status` varchar(25) NOT NULL DEFAULT 'Yet to be delivered',
   `deleted` tinyint(4) NOT NULL DEFAULT '0'
@@ -64,11 +66,13 @@ CREATE TABLE `orders` (
 -- Dumping data for table `orders`
 --
 
-INSERT INTO `orders` (`id`, `customer_id`, `address`, `date`, `payment_type`, `total`, `status`, `deleted`) VALUES
-(1, 2, 'xzczxzxc', '2017-03-28 17:32:41', 'Wallet', 150, 'Cancelled by Customer', 1),
-(2, 2, 'xvcxvxcv', '2017-03-28 17:43:05', 'Wallet', 130, 'Cancelled by Customer', 1),
-(3, 3, 'asdascxz', '2017-03-28 19:49:33', 'Cash O', 130, 'Cancelled by Customer', 1),
-(4, 3, 'asdasxxcv', '2017-03-28 19:52:01', 'Cash O', 130, 'Cancelled by Customer', 1);
+INSERT INTO `orders` (`id`, `customer_id`, `address`, `description`, `date`, `payment_type`, `total`, `status`, `deleted`) VALUES
+(1, 2, 'Address 2', '', '2017-03-28 17:32:41', 'Wallet', 150, 'Yet to be delivered', 1),
+(2, 2, 'New address 2', '', '2017-03-28 17:43:05', 'Wallet', 130, 'Cancelled by Customer', 1),
+(3, 3, 'Address 3', '', '2017-03-28 19:49:33', 'Cash On Delivery', 130, 'Yet to be delivered', 1),
+(4, 3, 'Address 3', '', '2017-03-28 19:52:01', 'Cash On Delivery', 130, 'Cancelled by Admin', 1),
+(5, 3, 'New Address 3', '', '2017-03-28 20:47:28', 'Wallet', 285, 'Paused', 0),
+(6, 3, 'New Address 3', '', '2017-03-30 00:43:31', 'Wallet', 325, 'Cancelled by Customer', 1);
 
 -- --------------------------------------------------------
 
@@ -96,7 +100,13 @@ INSERT INTO `order_details` (`id`, `order_id`, `item_id`, `quantity`, `price`) V
 (5, 3, 2, 2, 90),
 (6, 3, 3, 2, 40),
 (7, 4, 2, 2, 90),
-(8, 4, 3, 2, 40);
+(8, 4, 3, 2, 40),
+(9, 5, 2, 5, 225),
+(10, 5, 3, 2, 40),
+(11, 5, 5, 1, 20),
+(12, 6, 2, 5, 225),
+(13, 6, 3, 3, 60),
+(14, 6, 5, 2, 40);
 
 -- --------------------------------------------------------
 
@@ -111,8 +121,8 @@ CREATE TABLE `users` (
   `username` varchar(10) NOT NULL,
   `password` varchar(16) NOT NULL,
   `email` varchar(35) NOT NULL,
-  `address` varchar(300) DEFAULT NULL,
-  `contact` int(11) NOT NULL,
+  `address` varchar(300) NOT NULL,
+  `contact` bigint(11) NOT NULL,
   `verified` tinyint(1) NOT NULL DEFAULT '0',
   `deleted` tinyint(4) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -122,10 +132,11 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `role`, `name`, `username`, `password`, `email`, `address`, `contact`, `verified`, `deleted`) VALUES
-(1, 'Administrator', 'Admin 1', 'root', 'toor', '', 'Some Admin ddress', 98765432, 1, 0),
-(2, 'Customer', 'Customer 1', 'user1', 'pass1', '', NULL, 123123, 1, 0),
-(3, 'Customer', 'Customer 4', 'user2', 'pass2', '', NULL, 123123, 0, 0),
-(4, 'Customer', 'Customer 3', 'user3', 'pass3', 'asdasd@gmail.com', '213sdadasd', 123123123, 0, 0);
+(1, 'Administrator', 'Admin 1', 'root', 'toor', '', 'Address 1', 9898000000, 1, 0),
+(2, 'Customer', 'Customer 1', 'user1', 'pass1', 'mail2@example.com', 'Address 2', 9898000001, 1, 0),
+(3, 'Customer', 'Customer 2', 'user2', 'pass2', 'mail3@example.com', 'Address 3', 9898000002, 1, 0),
+(4, 'Customer', 'Customer 3', 'user3', 'pass3', '', '', 9898000003, 0, 0),
+(5, 'Customer', 'asdasdasd', 'user4', 'pass4', '', '', 9898000004, 0, 1);
 
 -- --------------------------------------------------------
 
@@ -146,7 +157,8 @@ INSERT INTO `wallet` (`id`, `customer_id`) VALUES
 (1, 1),
 (2, 2),
 (3, 3),
-(4, 4);
+(4, 4),
+(5, 5);
 
 -- --------------------------------------------------------
 
@@ -168,9 +180,10 @@ CREATE TABLE `wallet_details` (
 
 INSERT INTO `wallet_details` (`id`, `wallet_id`, `number`, `cvv`, `balance`) VALUES
 (1, 1, '6155247490533921', 983, 3430),
-(2, 2, '1887587142382050', 772, 2000),
-(3, 3, '4595809639046830', 532, 2000),
-(4, 4, '5475856443351234', 521, 2000);
+(2, 2, '1887587142382050', 772, 1720),
+(3, 3, '4595809639046830', 532, 1130),
+(4, 4, '5475856443351234', 521, 2000),
+(5, 5, '9076633115663264', 229, 2000);
 
 --
 -- Indexes for dumped tables
@@ -233,32 +246,32 @@ ALTER TABLE `wallet_details`
 -- AUTO_INCREMENT for table `items`
 --
 ALTER TABLE `items`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT for table `order_details`
 --
 ALTER TABLE `order_details`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT for table `wallet`
 --
 ALTER TABLE `wallet`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT for table `wallet_details`
 --
 ALTER TABLE `wallet_details`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- Constraints for dumped tables
 --

@@ -1,7 +1,7 @@
 <?php
 include 'includes/connect.php';
 include 'includes/wallet.php';
-$continue=1;
+$continue=0;
 $total = 0;
 if($_SESSION['customer_sid']==session_id())
 {
@@ -180,7 +180,7 @@ if($continue){
         <i class="mdi-content-content-paste red circle"></i>
         <p><strong>Name:</strong>'.$name.'</p>
 		<p><strong>Contact Number:</strong> '.$contact.'</p>
-		<p><strong>Address:</strong> '.$_POST['address'].'</p>	
+		<p><strong>Address:</strong> '.htmlspecialchars($_POST['address']).'</p>	
 		<p><strong>Payment Type:</strong> '.$_POST['payment_type'].'</p>			
         <a href="#" class="secondary-content"><i class="mdi-action-grade"></i></a>';
 		
@@ -224,6 +224,8 @@ if($continue){
             </div>
         </div>
     </li>';
+	if(!empty($_POST['description']))
+		echo '<li class="collection-item avatar"><p><strong>Note: </strong>'.htmlspecialchars($_POST['description']).'</p></li>';
 	if($_POST['payment_type'] == 'Wallet')
 	echo '<div id="basic-collections" class="section">
 		<div class="row">
@@ -248,7 +250,8 @@ foreach ($_POST as $key => $value)
 }
 ?>
 <input type="hidden" name="payment_type" value="<?php echo $_POST['payment_type'];?>">
-<input type="hidden" name="address" value="<?php echo $_POST['address'];?>">
+<input type="hidden" name="address" value="<?php echo htmlspecialchars($_POST['address']);?>">
+<input type="hidden" name="description" value="<?php echo htmlspecialchars($_POST['description']);?>">
 <?php if($_POST['payment_type'] == 'Wallet') echo '<input type="hidden" name="balance" value="<?php echo ($balance-$total);?>">'; ?>
 <input type="hidden" name="total" value="<?php echo $total;?>">
 <div class="input-field col s12">
