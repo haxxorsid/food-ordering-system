@@ -176,7 +176,8 @@ include 'includes/wallet.php';
                               <p><strong>Payment Type:</strong> '.$row['payment_type'].'</p>
 							  <p><strong>Address: </strong>'.$row['address'].'</p>							  
                               <p><strong>Status:</strong> '.($status=='Paused' ? 'Paused <a  data-position="bottom" data-delay="50" data-tooltip="Please contact administrator for further details." class="btn-floating waves-effect waves-light tooltipped cyan">    ?</a>' : $status).'</p>							  
-                              <a href="#" class="secondary-content"><i class="mdi-action-grade"></i></a>
+							  '.(!empty($row['description']) ? '<p><strong>Note: </strong>'.$row['description'].'</p>' : '').'						                               
+							  <a href="#" class="secondary-content"><i class="mdi-action-grade"></i></a>
                               </li>';
 						$order_id = $row['id'];
 						$sql1 = mysqli_query($con, "SELECT * FROM order_details WHERE order_id = $order_id;");
@@ -212,13 +213,7 @@ include 'includes/wallet.php';
                                             </div>
                                             <div class="col s3">
                                                 <span><strong>Rs. '.$row['total'].'</strong></span>
-                                            </div></div></li>';
-									if(!empty($row['description'])){
-									echo '<li class="collection-item"><div class="row"><p><strong>Note: </strong>'.$row['description'].'</p>';
-									}
-									else{
-										echo '<div class="row">';
-									}
+                                            </div>';
 								if(!preg_match('/^Cancelled/', $status)){
 									if($status != 'Delivered'){
 								echo '<form action="routers/cancel-order.php" method="post">

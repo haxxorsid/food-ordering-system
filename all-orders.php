@@ -192,8 +192,9 @@ include 'includes/connect.php';
 							<p><strong>Name: </strong>'.$row3['name'].'</p>
 							<p><strong>Address: </strong>'.$row['address'].'</p>
 							'.($row3['contact'] == '' ? '' : '<p><strong>Contact: </strong>'.$row3['contact'].'</p>').'	
-							'.($row3['email'] == '' ? '' : '<p><strong>Email: </strong>'.$row3['email'].'</p>').'							
-                            </li>';								
+							'.($row3['email'] == '' ? '' : '<p><strong>Email: </strong>'.$row3['email'].'</p>').'		
+							'.(!empty($row['description']) ? '<p><strong>Note: </strong>'.$row['description'].'</p>' : '').'								
+                            </li>';							
 							}
 						while($row1 = mysqli_fetch_array($sql1))
 						{
@@ -225,13 +226,7 @@ include 'includes/connect.php';
                                             </div>
                                             <div class="col s3">
                                                 <span><strong>Rs. '.$row['total'].'</strong></span>
-                                            </div></div></li>';
-									if(!empty($row['description'])){
-									echo '<li class="collection-item"><div class="row"><p><strong>Note: </strong>'.$row['description'].'</p>';
-									}
-									else{
-										echo '<div class="row">';
-									}											
+                                            </div>';										
 								if(!$deleted){
 								echo '<button class="btn waves-effect waves-light right submit" type="submit" name="action">Change Status
                                               <i class="mdi-content-clear right"></i> 
