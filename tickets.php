@@ -13,7 +13,7 @@ include 'includes/wallet.php';
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="msapplication-tap-highlight" content="no">
-  <title>Order Food</title>
+  <title>Tickets</title>
 
   <!-- Favicons-->
   <link rel="icon" href="images/favicon/favicon-32x32.png" sizes="32x32">
@@ -136,7 +136,7 @@ include 'includes/wallet.php';
                 </div>
             </div>
             </li>
-            <li class="bold active"><a href="index.php" class="waves-effect waves-cyan"><i class="mdi-editor-border-color"></i> Order Food</a>
+            <li class="bold"><a href="index.php" class="waves-effect waves-cyan"><i class="mdi-editor-border-color"></i> Order Food</a>
             </li>
                 <li class="no-padding">
                     <ul class="collapsible collapsible-accordion">
@@ -159,15 +159,22 @@ include 'includes/wallet.php';
                 </li>
                 <li class="no-padding">
                     <ul class="collapsible collapsible-accordion">
-                        <li class="bold"><a class="collapsible-header waves-effect waves-cyan"><i class="mdi-action-question-answer"></i> Tickets</a>
+                        <li class="bold"><a class="collapsible-header waves-effect waves-cyan active"><i class="mdi-action-question-answer"></i> Tickets</a>
                             <div class="collapsible-body">
                                 <ul>
-								<li><a href="tickets.php">All Tickets</a>
+								<li class="<?php
+								if(!isset($_GET['status'])){
+										echo 'active';
+									}?>
+									"><a href="tickets.php">All Tickets</a>
                                 </li>
 								<?php
 									$sql = mysqli_query($con, "SELECT DISTINCT status FROM tickets WHERE poster_id = $user_id AND not deleted;");
 									while($row = mysqli_fetch_array($sql)){
-                                    echo '<li><a href="tickets.php?status='.$row['status'].'">'.$row['status'].'</a>
+									if(isset($_GET['status'])){
+										$status = $row['status'];
+									}
+                                    echo '<li class='.(isset($_GET['status'])?($status == $_GET['status'] ? 'active' : ''): '').'><a href="tickets.php?status='.$row['status'].'">'.$row['status'].'</a>
                                     </li>';
 									}
 									?>
@@ -175,7 +182,7 @@ include 'includes/wallet.php';
                             </div>
                         </li>
                     </ul>
-                </li>					
+                </li>			
             <li class="bold"><a href="details.php" class="waves-effect waves-cyan"><i class="mdi-social-person"></i> Edit Details</a>
             </li>				
         </ul>
@@ -193,7 +200,7 @@ include 'includes/wallet.php';
           <div class="container">
             <div class="row">
               <div class="col s12 m12 l12">
-                <h5 class="breadcrumbs-title">Order</h5>
+                <h5 class="breadcrumbs-title">Tickets</h5>
               </div>
             </div>
           </div>
@@ -203,62 +210,107 @@ include 'includes/wallet.php';
 
         <!--start container-->
         <div class="container">
-          <p class="caption">Order your food here.</p>
+          <p class="caption">If you're experiencing any issues, contact us by opening a ticket.</p>
           <div class="divider"></div>
-		  <form class="formValidate" id="formValidate" method="post" action="place-order.php" novalidate="novalidate">
             <div class="row">
               <div class="col s12 m4 l3">
-                <h4 class="header">Order Food</h4>
+                <h4 class="header">Open a ticket</h4>
               </div>
-              <div>
-                  <table id="data-table-customer" class="responsive-table display" cellspacing="0">
-                    <thead>
-                      <tr>
-                        <th>Name</th>
-                        <th>Item Price/Piece</th>
-                        <th>Quantity</th>
-                      </tr>
-                    </thead>
-
-                    <tbody>
-				<?php
-				$result = mysqli_query($con, "SELECT * FROM items where not deleted;");
-				while($row = mysqli_fetch_array($result))
-				{
-					echo '<tr><td>'.$row["name"].'</td><td>'.$row["price"].'</td>';                      
-					echo '<td><div class="input-field col s12"><label for='.$row["id"].' class="">Quantity</label>';
-					echo '<input id="'.$row["id"].'" name="'.$row['id'].'" type="text" data-error=".errorTxt'.$row["id"].'"><div class="errorTxt'.$row["id"].'"></div></td></tr>';
-				}
-				?>
-                    </tbody>
-</table>
+<div>
+                <div class="card-panel">
+                  <div class="row">
+                    <form class="formValidate" id="formValidate" method="post" action="routers/add-ticket.php" novalidate="novalidate" class="col s12">
+                      <div class="row">
+                        <div class="input-field col s12">
+                          <input name="subject" id="subject" type="text" data-error=".errorTxt1">
+                          <label for="subject" class="">Subject</label>
+						  <div class="errorTxt1"></div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="input-field col s12">
+                          <textarea name="description" id="description" class="materialize-textarea validate" data-error=".errorTxt2"></textarea>
+                          <label for="description" class="">Description</label>
+						  <div class="errorTxt2"></div>
+                        </div>
+                      </div>					  
+                      <div class="row">
+                        <div class="input-field col s4">
+							<select name="type">
+								<option disabled selected>Choose a type</option>
+								<option value="Support">Support</option>
+								<option value="Payment">Payment</option>
+								<option value="Complaint">Complaint</option>
+								<option value="Others">Others</option>				
+							</select>
+							<label>Type</label>
+                        </div>
+                      </div>					  
+                      <div class="row">
+                        <div class="row">
+                          <div class="input-field col s12">
+                            <button class="btn cyan waves-effect waves-light right" type="submit" name="action">Submit
+                              <i class="mdi-content-send right"></i>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
               </div>
-			  <div class="input-field col s12">
-              <i class="mdi-editor-mode-edit prefix"></i>
-              <textarea id="description" name="description" class="materialize-textarea"></textarea>
-              <label for="description" class="">Any note(optional)</label>
-			  </div>
-			  <div>
-			  <div class="input-field col s12">
-                              <button class="btn cyan waves-effect waves-light right" type="submit" name="action">Order
-                                <i class="mdi-content-send right"></i>
-                              </button>
-                            </div>
-            </div>
-			</form>
             <div class="divider"></div>
             
           </div>
-        </div>
         <!--end container-->
 
-      </section>
+
       <!-- END CONTENT -->
+    </div>
+	
+	
+	        <!--start container-->
+        <div class="container">
+          <p class="caption">List of your tickets</p>
+          <div class="divider"></div>
+									<div id="work-collections">
+									<ul id="projects-collection" class="collection">
+								<?php
+									if(isset($_GET['status'])){
+										$status = $_GET['status'];
+									}
+									else{
+										$status = '%';
+									}			
+									$sql = mysqli_query($con, "SELECT * FROM tickets WHERE poster_id = $user_id AND status LIKE '$status' AND not deleted;");
+									while($row = mysqli_fetch_array($sql)){								                                
+									echo'<a href="view-ticket.php?id='.$row['id'].'"class="collection-item">
+                                        <div class="row">
+                                            <div class="col s6">
+                                                <p class="collections-title">'.$row['subject'].'</p>                                              
+                                            </div>
+                                            <div class="col s2">
+                                            <span class="task-cat cyan">'.$row['status'].'</span></div>											
+                                            <div class="col s2">
+                                            <span class="task-cat grey darken-3">'.$row['type'].'</span></div>
+                                            <div class="col s2">
+                                            <span class="badge">'.$row['date'].'</span></div>
+                                        </div>
+                                    </a>';
+									}
+									?>
+									</ul>
+									</div>
+            <div class="divider"></div>
+            
+          </div>
+        <!--end container-->
 
 
-  </div>
+      <!-- END CONTENT -->
+    </div>
   <!-- END MAIN -->
-
+      </section>
 
 
   <!-- //////////////////////////////////////////////////////////////////////////// -->
@@ -302,31 +354,35 @@ include 'includes/wallet.php';
     <script type="text/javascript">
     $("#formValidate").validate({
         rules: {
-			<?php
-			$result = mysqli_query($con, "SELECT * FROM items where not deleted;");
-			while($row = mysqli_fetch_array($result))
-			{
-				echo $row["id"].':{
-				min: 0,
-				max: 10
-				},
-				';
-			}
-		echo '},';
-		?>
+            subject: {
+                required: true,
+                minlength: 5,
+				maxlength: 100
+            },
+            description: {
+                required: true,
+                minlength: 20,
+				maxlength: 300				
+            },
+            type: {
+                required: true,			
+            },			
+        },
         messages: {
-			<?php
-			$result = mysqli_query($con, "SELECT * FROM items where not deleted;");
-			while($row = mysqli_fetch_array($result))
-			{  
-				echo $row["id"].':{
-				min: "Minimum 0",
-				max: "Maximum 10"
-				},
-				';
-			}
-		echo '},';
-		?>
+            subject: {
+                required: "Provide a subject",
+                minlength: "Minimum 5 characters are required.",
+                maxlength: "Maximum 100 characters are required."				
+            },
+            description: {
+                required: "Provide description of your problem",
+                minlength: "Minimum 20 characters are required.",
+                maxlength: "Maximum 3000 characters are required."					
+            },	
+            type: {
+                required: "Please specify type of your problem",
+            },				
+        },
         errorElement : 'div',
         errorPlacement: function(error, element) {
           var placement = $(element).data('error');
@@ -347,7 +403,7 @@ include 'includes/wallet.php';
 	{
 		if($_SESSION['admin_sid']==session_id())
 		{
-			header("location:admin-page.php");		
+			header("location:all-tickets.php");		
 		}
 		else{
 			header("location:login.php");

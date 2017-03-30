@@ -154,6 +154,25 @@ include 'includes/connect.php';
                         </li>
                     </ul>
                 </li>
+                 <li class="no-padding">
+                    <ul class="collapsible collapsible-accordion">
+                        <li class="bold"><a class="collapsible-header waves-effect waves-cyan"><i class="mdi-action-question-answer"></i> Tickets</a>
+                            <div class="collapsible-body">
+                                <ul>
+								<li><a href="all-tickets.php">All Tickets</a>
+                                </li>
+								<?php
+									$sql = mysqli_query($con, "SELECT DISTINCT status FROM tickets;");
+									while($row = mysqli_fetch_array($sql)){
+                                    echo '<li><a href="all-tickets.php?status='.$row['status'].'">'.$row['status'].'</a>
+                                    </li>';
+									}
+									?>
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+                </li>			
             <li class="bold"><a href="users.php" class="waves-effect waves-cyan"><i class="mdi-social-person"></i> Users</a>
             </li>				
         </ul>
@@ -327,7 +346,8 @@ include 'includes/connect.php';
 			{
 				echo $row["id"].'_name:{
 				required: true,
-				minlength: 5
+				minlength: 5,
+				maxlength: 20 
 				},';
 				echo $row["id"].'_price:{
 				required: true,	
@@ -343,7 +363,8 @@ include 'includes/connect.php';
 			{  
 				echo $row["id"].'_name:{
 				required: "Ener item name",
-				minlength: "Minimum length is 5 characters"
+				minlength: "Minimum length is 5 characters",
+				maxlength: "Maximum length is 20 characters"
 				},';
 				echo $row["id"].'_price:{
 				required: "Ener price of item",

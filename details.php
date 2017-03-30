@@ -160,6 +160,25 @@ $username = $row['username'];
                         </li>
                     </ul>
                 </li>
+                <li class="no-padding">
+                    <ul class="collapsible collapsible-accordion">
+                        <li class="bold"><a class="collapsible-header waves-effect waves-cyan"><i class="mdi-action-question-answer"></i> Tickets</a>
+                            <div class="collapsible-body">
+                                <ul>
+								<li><a href="tickets.php">All Tickets</a>
+                                </li>
+								<?php
+									$sql = mysqli_query($con, "SELECT DISTINCT status FROM tickets WHERE poster_id = $user_id AND not deleted;");
+									while($row = mysqli_fetch_array($sql)){
+                                    echo '<li><a href="tickets.php?status='.$row['status'].'">'.$row['status'].'</a>
+                                    </li>';
+									}
+									?>
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+                </li>			
             <li class="bold active"><a href="details.php" class="waves-effect waves-cyan"><i class="mdi-social-person"></i> Edit Details</a>
             </li>			
         </ul>
@@ -312,48 +331,64 @@ $username = $row['username'];
         rules: {
             username: {
                 required: true,
-                minlength: 5
+                minlength: 5,
+				maxlength: 10
             },
             name: {
                 required: true,
-                minlength: 5				
+                minlength: 5,
+				maxlength: 15
             },
             email: {
 				required: true,
+				maxlength: 35,
 			},
 			password: {
 				required: true,
-				minlength: 5
+				minlength: 5,
+				maxlength: 16,
 			},
             phone: {
 				required: true,
-				minlength: 4
+				minlength: 4,
+				maxlength: 11
 			},
 			address: {
 				required: true,
-				minlength: 10				
+				minlength: 10,
+				maxlength: 300
 			},
         },
         messages: {
             username: {
                 required: "Enter username",
-                minlength: "Minimum 5 characters are required."
+                minlength: "Minimum 5 characters are required.",
+                maxlength: "Maximum 10 characters are required."				
             },
             name: {
                 required: "Enter name",
-                minlength: "Minimum 5 characters are required."
+                minlength: "Minimum 5 characters are required.",
+                maxlength: "Maximum 15 characters are required."
             },
             email: {
 				required: "Enter email",
+                maxlength: "Maximum 35 characters are required."				
 			},
 			password: {
 				required: "Enter password",
-				minlength: "Minimum 5 characters are required."
+				minlength: "Minimum 5 characters are required.",
+                maxlength: "Maximum 16 characters are required."				
 			},
             phone:{
 				required: "Specify contact number.",
-				minlength: "Minimum 4 characters are required."
-			},		
+				minlength: "Minimum 4 characters are required.",
+                maxlength: "Maximum 11 digits are accepted."				
+			},	
+            address:{
+				required: "Specify address",
+				minlength: "Minimum 10 characters are required.",
+                maxlength: "Maximum 300 characters are accepted."				
+			},			
         },
         errorElement : 'div',
         errorPlacement: function(error, element) {

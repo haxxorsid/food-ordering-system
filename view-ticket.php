@@ -1,10 +1,26 @@
 <?php
 include 'includes/connect.php';
 include 'includes/wallet.php';
+$continue=0;
+if($_SESSION['customer_sid']==session_id())
+{
+		$ticket_id = $_GET['id'];
+		$sql1 = "SELECT * FROM tickets where poster_id = $user_id AND id = $ticket_id AND not deleted;";
+		if(mysqli_num_rows(mysqli_query($con,$sql1))>0){
+			$row  = $con->query($sql1)->fetch_assoc();
+			$type = $row['type'];
+			$subject = $row['subject'];
+			$description = $row['description'];
+			$date = $row['date'];
+			$status = $row['status'];
+			$continue=1;
+		}
+		else
+			$continue = 0;	
+}
+if($continue){
+?>
 
-	if($_SESSION['customer_sid']==session_id())
-	{
-		?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -13,7 +29,7 @@ include 'includes/wallet.php';
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="msapplication-tap-highlight" content="no">
-  <title>Order Food</title>
+  <title>Ticket No. <?php echo $ticket_id.' - '. $type;?></title>
 
   <!-- Favicons-->
   <link rel="icon" href="images/favicon/favicon-32x32.png" sizes="32x32">
@@ -30,10 +46,8 @@ include 'includes/wallet.php';
   <link href="css/style.min.css" type="text/css" rel="stylesheet" media="screen,projection">
   <!-- Custome CSS-->    
   <link href="css/custom/custom.min.css" type="text/css" rel="stylesheet" media="screen,projection">
-  <!-- INCLUDED PLUGIN CSS ON THIS PAGE -->
+
   <link href="js/plugins/perfect-scrollbar/perfect-scrollbar.css" type="text/css" rel="stylesheet" media="screen,projection">
-  <link href="js/plugins/data-tables/css/jquery.dataTables.min.css" type="text/css" rel="stylesheet" media="screen,projection">
-  
    <style type="text/css">
   .input-field div.error{
     position: relative;
@@ -124,7 +138,7 @@ include 'includes/wallet.php';
                 <div class="col col s4 m4 l4">
                     <img src="images/avatar.jpg" alt="" class="circle responsive-img valign profile-image">
                 </div>
-				 <div class="col col s8 m8 l8">
+				<div class="col col s8 m8 l8">
                     <ul id="profile-dropdown" class="dropdown-content">
                         <li><a href="routers/logout.php"><i class="mdi-hardware-keyboard-tab"></i> Logout</a>
                         </li>
@@ -136,7 +150,7 @@ include 'includes/wallet.php';
                 </div>
             </div>
             </li>
-            <li class="bold active"><a href="index.php" class="waves-effect waves-cyan"><i class="mdi-editor-border-color"></i> Order Food</a>
+            <li class="bold"><a href="index.php" class="waves-effect waves-cyan"><i class="mdi-editor-border-color"></i> Order Food</a>
             </li>
                 <li class="no-padding">
                     <ul class="collapsible collapsible-accordion">
@@ -165,7 +179,7 @@ include 'includes/wallet.php';
 								<li><a href="tickets.php">All Tickets</a>
                                 </li>
 								<?php
-									$sql = mysqli_query($con, "SELECT DISTINCT status FROM tickets WHERE poster_id = $user_id AND not deleted;");
+									$sql = mysqli_query($con, "SELECT DISTINCT status FROM tickets WHERE poster_id = $user_id;");
 									while($row = mysqli_fetch_array($sql)){
                                     echo '<li><a href="tickets.php?status='.$row['status'].'">'.$row['status'].'</a>
                                     </li>';
@@ -175,7 +189,7 @@ include 'includes/wallet.php';
                             </div>
                         </li>
                     </ul>
-                </li>					
+                </li>				
             <li class="bold"><a href="details.php" class="waves-effect waves-cyan"><i class="mdi-social-person"></i> Edit Details</a>
             </li>				
         </ul>
@@ -193,7 +207,7 @@ include 'includes/wallet.php';
           <div class="container">
             <div class="row">
               <div class="col s12 m12 l12">
-                <h5 class="breadcrumbs-title">Order</h5>
+                <h5 class="breadcrumbs-title">Provide Order Details</h5>
               </div>
             </div>
           </div>
@@ -203,58 +217,92 @@ include 'includes/wallet.php';
 
         <!--start container-->
         <div class="container">
-          <p class="caption">Order your food here.</p>
+          <p class="caption">Receipt</p>
           <div class="divider"></div>
-		  <form class="formValidate" id="formValidate" method="post" action="place-order.php" novalidate="novalidate">
-            <div class="row">
-              <div class="col s12 m4 l3">
-                <h4 class="header">Order Food</h4>
-              </div>
-              <div>
-                  <table id="data-table-customer" class="responsive-table display" cellspacing="0">
-                    <thead>
-                      <tr>
-                        <th>Name</th>
-                        <th>Item Price/Piece</th>
-                        <th>Quantity</th>
-                      </tr>
-                    </thead>
-
-                    <tbody>
-				<?php
-				$result = mysqli_query($con, "SELECT * FROM items where not deleted;");
-				while($row = mysqli_fetch_array($result))
-				{
-					echo '<tr><td>'.$row["name"].'</td><td>'.$row["price"].'</td>';                      
-					echo '<td><div class="input-field col s12"><label for='.$row["id"].' class="">Quantity</label>';
-					echo '<input id="'.$row["id"].'" name="'.$row['id'].'" type="text" data-error=".errorTxt'.$row["id"].'"><div class="errorTxt'.$row["id"].'"></div></td></tr>';
-				}
-				?>
-                    </tbody>
-</table>
-              </div>
-			  <div class="input-field col s12">
-              <i class="mdi-editor-mode-edit prefix"></i>
-              <textarea id="description" name="description" class="materialize-textarea"></textarea>
-              <label for="description" class="">Any note(optional)</label>
-			  </div>
-			  <div>
-			  <div class="input-field col s12">
-                              <button class="btn cyan waves-effect waves-light right" type="submit" name="action">Order
-                                <i class="mdi-content-send right"></i>
-                              </button>
-                            </div>
-            </div>
-			</form>
-            <div class="divider"></div>
-            
+          <!--editableTable-->
+<div class="section">
+                                <?php 
+								echo '<ul id="task-card" class="collection with-header">
+									<div id="card-alert" class="card cyan">
+										<div class="card-content white-text">
+										<span class="card-title white-text darken-1">Ticket No. '.$ticket_id.'</span>
+										<p><strong>Subject: </strong>'.$subject.'</p>
+										<p><strong>Status: </strong>'.$status.'</p>	
+										<p><strong>Type: </strong>'.$type.'</p>											
+										</div>
+										<div class="card-action cyan">
+										<form method="post" action="routers/ticket-status.php">
+										<input type="hidden" name="ticket_id" value="'.$ticket_id.'">										
+										<input type="hidden" name="status" value="'.($status != 'Closed' ? 'Closed' : 'Open').'">
+										<button class="waves-effect waves-light deep-orange btn white-text" type="submit" name="action">'
+										.($status != 'Closed' ? 'Close<i class="mdi-navigation-close"></i>' : 'Reopen<i class="mdi-navigation-check"></i>').'
+										</button>
+										</form>
+										</div>
+									</div>										
+                                </ul>';
+								echo '<ul id="issues-collection" class="collection">';
+								$sql1 = mysqli_query($con, "SELECT * from ticket_details WHERE ticket_id = $ticket_id;");
+								while($row1 = mysqli_fetch_array($sql1)){
+									$sql2 = "SELECT * FROM users WHERE id = ".$row1['user_id'].";";
+									if(mysqli_num_rows(mysqli_query($con,$sql2))>0){
+										$row2  = $con->query($sql2)->fetch_assoc();
+										$name = $row2['name'];
+										$role1 = $row2['role'];										
+									}
+								  echo '
+								  <li class="collection-item avatar">
+									  <i class="'.($role1=='Administrator' ? 'mdi-action-star-rate' : 'mdi-social-person').' cyan circle"></i>
+									  <span class="collection-header"> '.$name.'</span>
+									  <p><strong>Date:</strong> '.$row1['date'].'</p>
+									  <p><strong>Role:</strong> '.$role1.'</p>					                               
+									  <a href="#" class="secondary-content">
+									  <i class="mdi-action-grade"></i></a>
+								  </li>
+								  <li class="collection-item">
+									  <div class="row">
+									  <p class="caption">'.$row1['description'].'</p>
+									  </div>
+									  </li>';
+								}
+							  echo '</ul>';
+							  if($status != 'Closed'){
+							  echo '
+							  <div class="card-panel">
+                  <div class="row">
+                    <form class="formValidate" id="formValidate" method="post" action="routers/ticket-message.php" novalidate="novalidate" class="col s12">					  
+                      <div class="row">
+					  <input type="hidden" name="role" value="'.$role.'">
+					  <input type="hidden" name="ticket_id" value="'.$ticket_id.'">
+                        <div class="input-field col s12">
+                          <i class="mdi-action-home prefix"></i>
+                          <textarea name="message" id="message" class="materialize-textarea validate" data-error=".errorTxt1"></textarea>
+                          <label for="message" class="">Add a reply</label>
+						  <div class="errorTxt1"></div>
+                        </div>
+                        <div class="row">
+                          <div class="input-field col s12">
+                            <button class="btn cyan waves-effect waves-light right" type="submit" name="action">Reply
+                              <i class="mdi-content-send right"></i>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>';
+							  }
+								?>
           </div>
+              </div>
+            </div>
         </div>
         <!--end container-->
 
       </section>
       <!-- END CONTENT -->
-
+    </div>
+    <!-- END WRAPPER -->
 
   </div>
   <!-- END MAIN -->
@@ -286,15 +334,11 @@ include 'includes/wallet.php';
     <script type="text/javascript" src="js/plugins/angular.min.js"></script>
     <!--materialize js-->
     <script type="text/javascript" src="js/materialize.min.js"></script>
-    <!--scrollbar-->
-    <script type="text/javascript" src="js/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
-    <!-- data-tables -->
-    <script type="text/javascript" src="js/plugins/data-tables/js/jquery.dataTables.min.js"></script>
-    <script type="text/javascript" src="js/plugins/data-tables/data-tables-script.js"></script>
-	
     <script type="text/javascript" src="js/plugins/jquery-validation/jquery.validate.min.js"></script>
     <script type="text/javascript" src="js/plugins/jquery-validation/additional-methods.min.js"></script>
     
+    <!--scrollbar-->
+    <script type="text/javascript" src="js/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script> 
     <!--plugins.js - Some Specific JS codes for Plugin Settings-->
     <script type="text/javascript" src="js/plugins.min.js"></script>
     <!--custom-script.js - Add your own theme custom JS-->
@@ -302,31 +346,19 @@ include 'includes/wallet.php';
     <script type="text/javascript">
     $("#formValidate").validate({
         rules: {
-			<?php
-			$result = mysqli_query($con, "SELECT * FROM items where not deleted;");
-			while($row = mysqli_fetch_array($result))
-			{
-				echo $row["id"].':{
-				min: 0,
-				max: 10
-				},
-				';
-			}
-		echo '},';
-		?>
+            message: {
+                required: true,
+                minlength: 5,
+				maxlength: 300	
+            },		
+        },
         messages: {
-			<?php
-			$result = mysqli_query($con, "SELECT * FROM items where not deleted;");
-			while($row = mysqli_fetch_array($result))
-			{  
-				echo $row["id"].':{
-				min: "Minimum 0",
-				max: "Maximum 10"
-				},
-				';
-			}
-		echo '},';
-		?>
+            message: {
+                required: "Please provide a reply.",
+                minlength: "Minimum 5 characters are required.",
+                maxlength: "Maximum 3000 characters are required."				
+            },			
+        },
         errorElement : 'div',
         errorPlacement: function(error, element) {
           var placement = $(element).data('error');
@@ -337,7 +369,7 @@ include 'includes/wallet.php';
           }
         }
      });
-    </script>
+    </script>	
 </body>
 
 </html>
@@ -347,7 +379,7 @@ include 'includes/wallet.php';
 	{
 		if($_SESSION['admin_sid']==session_id())
 		{
-			header("location:admin-page.php");		
+			header("location:view-ticket-admin.php?id=".$_GET['id']);		
 		}
 		else{
 			header("location:login.php");
