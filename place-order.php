@@ -245,7 +245,7 @@ $verified = $row['verified'];
 					  <?php
 					  	foreach ($_POST as $key => $value)
 						{
-							if($key == 'action'){
+							if($key == 'action' || $value == ''){
 								break;
 							}
 							echo '<input name="'.$key.'" type="hidden" value="'.$value.'">';
@@ -279,9 +279,10 @@ $verified = $row['verified'];
 		
 	foreach ($_POST as $key => $value)
 	{
-		if($key == 'action' || $key == 'description'){
+		if($value == ''){
 			break;
 		}
+		if(is_numeric($key)){
 		$result = mysqli_query($con, "SELECT * FROM items WHERE id = $key");
 		while($row = mysqli_fetch_array($result))
 		{
@@ -304,6 +305,7 @@ $verified = $row['verified'];
         </div>
     </li>';
 		$total = $total + $price;
+	}
 	}
     echo '<li class="collection-item">
         <div class="row">

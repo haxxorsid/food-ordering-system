@@ -3,10 +3,12 @@ include '../includes/connect.php';
 	foreach ($_POST as $key => $value)
 	{
 		if(preg_match("/[0-9]+_name/",$key)){
+			if($value != ''){
 			$key = strtok($key, '_');
 			$value = htmlspecialchars($value);
 			$sql = "UPDATE items SET name = '$value' WHERE id = $key;";
 			$con->query($sql);
+			}
 		}
 		if(preg_match("/[0-9]+_price/",$key)){
 			$key = strtok($key, '_');

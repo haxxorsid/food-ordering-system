@@ -33,6 +33,8 @@ include 'includes/connect.php';
 
   <!-- INCLUDED PLUGIN CSS ON THIS PAGE -->
   <link href="js/plugins/perfect-scrollbar/perfect-scrollbar.css" type="text/css" rel="stylesheet" media="screen,projection">
+  <link href="js/plugins/data-tables/css/jquery.dataTables.min.css" type="text/css" rel="stylesheet" media="screen,projection">
+  
      <style type="text/css">
   .input-field div.error{
     position: relative;
@@ -181,20 +183,18 @@ include 'includes/connect.php';
         <div class="container">
           <p class="caption">Add, Edit or Remove Menu Items.</p>
           <div class="divider"></div>
-          <!--editableTable-->
-          <div id="editableTable" class="section">
 		  <form class="formValidate" id="formValidate" method="post" action="routers/menu-router.php" novalidate="novalidate">
             <div class="row">
               <div class="col s12 m4 l3">
                 <h4 class="header">Order Food</h4>
               </div>
               <div>
-<table>
+				<table id="data-table-admin" class="responsive-table display" cellspacing="0">
                     <thead>
                       <tr>
-                        <th data-field="id">Name</th>
-                        <th data-field="name">Item Price/Piece</th>
-                        <th data-field="price">Available</th>
+                        <th>Name</th>
+                        <th>Item Price/Piece</th>
+                        <th>Available</th>
                       </tr>
                     </thead>
 
@@ -276,8 +276,6 @@ include 'includes/connect.php';
     </div>
     <!-- END WRAPPER -->
 
-  </div>
-  <!-- END MAIN -->
 
 
 
@@ -309,6 +307,9 @@ include 'includes/connect.php';
     <script type="text/javascript" src="js/materialize.min.js"></script>
     <!--scrollbar-->
     <script type="text/javascript" src="js/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+    <!-- data-tables -->
+    <script type="text/javascript" src="js/plugins/data-tables/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="js/plugins/data-tables/data-tables-script.js"></script>
     
     <script type="text/javascript" src="js/plugins/jquery-validation/jquery.validate.min.js"></script>
     <script type="text/javascript" src="js/plugins/jquery-validation/additional-methods.min.js"></script>

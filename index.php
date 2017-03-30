@@ -30,9 +30,10 @@ include 'includes/wallet.php';
   <link href="css/style.min.css" type="text/css" rel="stylesheet" media="screen,projection">
   <!-- Custome CSS-->    
   <link href="css/custom/custom.min.css" type="text/css" rel="stylesheet" media="screen,projection">
-
   <!-- INCLUDED PLUGIN CSS ON THIS PAGE -->
   <link href="js/plugins/perfect-scrollbar/perfect-scrollbar.css" type="text/css" rel="stylesheet" media="screen,projection">
+  <link href="js/plugins/data-tables/css/jquery.dataTables.min.css" type="text/css" rel="stylesheet" media="screen,projection">
+  
    <style type="text/css">
   .input-field div.error{
     position: relative;
@@ -185,20 +186,18 @@ include 'includes/wallet.php';
         <div class="container">
           <p class="caption">Order your food here.</p>
           <div class="divider"></div>
-          <!--editableTable-->
-          <div id="editableTable" class="section">
 		  <form class="formValidate" id="formValidate" method="post" action="place-order.php" novalidate="novalidate">
             <div class="row">
               <div class="col s12 m4 l3">
                 <h4 class="header">Order Food</h4>
               </div>
               <div>
-<table>
+                  <table id="data-table-customer" class="responsive-table display" cellspacing="0">
                     <thead>
                       <tr>
-                        <th data-field="id">Name</th>
-                        <th data-field="name">Item Price/Piece</th>
-                        <th data-field="price">Quantity</th>
+                        <th>Name</th>
+                        <th>Item Price/Piece</th>
+                        <th>Quantity</th>
                       </tr>
                     </thead>
 
@@ -236,8 +235,7 @@ include 'includes/wallet.php';
 
       </section>
       <!-- END CONTENT -->
-    </div>
-    <!-- END WRAPPER -->
+
 
   </div>
   <!-- END MAIN -->
@@ -271,7 +269,10 @@ include 'includes/wallet.php';
     <script type="text/javascript" src="js/materialize.min.js"></script>
     <!--scrollbar-->
     <script type="text/javascript" src="js/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
-
+    <!-- data-tables -->
+    <script type="text/javascript" src="js/plugins/data-tables/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="js/plugins/data-tables/data-tables-script.js"></script>
+	
     <script type="text/javascript" src="js/plugins/jquery-validation/jquery.validate.min.js"></script>
     <script type="text/javascript" src="js/plugins/jquery-validation/additional-methods.min.js"></script>
     
