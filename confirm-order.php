@@ -270,7 +270,7 @@ foreach ($_POST as $key => $value)
 ?>
 <input type="hidden" name="payment_type" value="<?php echo $_POST['payment_type'];?>">
 <input type="hidden" name="address" value="<?php echo htmlspecialchars($_POST['address']);?>">
-<input type="hidden" name="description" value="<?php echo htmlspecialchars($_POST['description']);?>">
+<?php if (isset($_POST['description'])) { echo'<input type="hidden" name="description" value="'.htmlspecialchars($_POST['description']).'">';}?>
 <?php if($_POST['payment_type'] == 'Wallet') echo '<input type="hidden" name="balance" value="<?php echo ($balance-$total);?>">'; ?>
 <input type="hidden" name="total" value="<?php echo $total;?>">
 <div class="input-field col s12">
