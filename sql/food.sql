@@ -184,7 +184,7 @@ INSERT INTO `users` (`id`, `role`, `name`, `username`, `password`, `email`, `add
 (2, 'Customer', 'Customer 1', 'user1', 'pass1', 'mail2@example.com', 'Address 2', 9898000001, 1, 0),
 (3, 'Customer', 'Customer 2', 'user2', 'pass2', 'mail3@example.com', 'Address 3', 9898000002, 1, 0),
 (4, 'Customer', 'Customer 3', 'user3', 'pass3', '', '', 9898000003, 0, 0),
-(5, 'Customer', 'asdasdasd', 'user4', 'pass4', '', '', 9898000004, 0, 1);
+(5, 'Customer', 'Customer 4', 'user4', 'pass4', '', '', 9898000004, 0, 1);
 
 -- --------------------------------------------------------
 
