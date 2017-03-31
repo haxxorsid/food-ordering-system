@@ -249,6 +249,7 @@ include 'includes/wallet.php';
                       <div class="row">
                         <div class="row">
                           <div class="input-field col s12">
+						  <input type="hidden" value="<?php echo $user_id;?>" name="id">
                             <button class="btn cyan waves-effect waves-light right" type="submit" name="action">Submit
                               <i class="mdi-content-send right"></i>
                             </button>
