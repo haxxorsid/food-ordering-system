@@ -168,8 +168,8 @@ CREATE TABLE `users` (
   `name` varchar(15) NOT NULL,
   `username` varchar(10) NOT NULL,
   `password` varchar(16) NOT NULL,
-  `email` varchar(35) NOT NULL,
-  `address` varchar(300) NOT NULL,
+  `email` varchar(35) NULL,
+  `address` varchar(300) NULL,
   `contact` bigint(11) NOT NULL,
   `verified` tinyint(1) NOT NULL DEFAULT '0',
   `deleted` tinyint(4) NOT NULL DEFAULT '0'
