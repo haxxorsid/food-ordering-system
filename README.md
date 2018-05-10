@@ -1,4 +1,4 @@
-# Stock-Management-System
+# Food Ordering System
 
 ## Screenshots
 ### Login
