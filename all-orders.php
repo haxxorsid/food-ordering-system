@@ -99,7 +99,7 @@ include 'includes/connect.php';
 								if(!isset($_GET['status'])){
 										echo 'active';
 									}?>
-									"><a href="all-orders.php">All Orders</a>
+									"><a href="All-orders.php">All Orders</a>
                                 </li>
 								<?php
 									$sql = mysqli_query($con, "SELECT DISTINCT status FROM orders;");
@@ -121,7 +121,7 @@ include 'includes/connect.php';
                         <li class="bold"><a class="collapsible-header waves-effect waves-cyan"><i class="mdi-action-question-answer"></i> Tickets</a>
                             <div class="collapsible-body">
                                 <ul>
-								<li><a href="all-tickets.php">All Tickets</a>
+								<li><a href="All-tickets.php">All Tickets</a>
                                 </li>
 								<?php
 									$sql = mysqli_query($con, "SELECT DISTINCT status FROM tickets;");
