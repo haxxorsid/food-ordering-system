@@ -208,7 +208,7 @@ include 'includes/wallet.php';
 		  <form class="formValidate" id="formValidate" method="post" action="place-order.php" novalidate="novalidate">
             <div class="row">
               <div class="col s12 m4 l3">
-                <h4 class="header">Order Food</h4>
+                <h4 class="header">you can Order Food now</h4>
               </div>
               <div>
                   <table id="data-table-customer" class="responsive-table display" cellspacing="0">
@@ -268,7 +268,7 @@ include 'includes/wallet.php';
     <div class="footer-copyright">
       <div class="container">
         <span>Copyright © 2017 <a class="grey-text text-lighten-4" href="#" target="_blank">Students</a> All rights reserved.</span>
-        <span class="right"> Design and Developed by <a class="grey-text text-lighten-4" href="#">Students</a></span>
+        <span class="right"> Design and Developed by Lona kani Alfred<a class="grey-text text-lighten-4" href="#">Students</a></span>
         </div>
     </div>
   </footer>

@@ -197,7 +197,7 @@ include 'includes/connect.php';
 
         <!--start container-->
         <div class="container">
-          <p class="caption">Enable, Disable or Verify Users.</p>
+          <p class="caption">allow, unable or authenticate users.</p>
           <div class="divider"></div>
           <!--editableTable-->
           <div id="editableTable" class="section">

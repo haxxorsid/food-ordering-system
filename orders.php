@@ -168,7 +168,7 @@ include 'includes/wallet.php';
 
         <!--start container-->
         <div class="container">
-          <p class="caption">List of your past orders with details</p>
+          <p class="caption">List all your past orders in complete order</p>
           <div class="divider"></div>
           <!--editableTable-->
 <div id="work-collections" class="seaction">
@@ -273,7 +273,7 @@ include 'includes/wallet.php';
     <div class="footer-copyright">
       <div class="container">
         <span>Copyright © 2017 <a class="grey-text text-lighten-4" href="#" target="_blank">Students</a> All rights reserved.</span>
-        <span class="right"> Design and Developed by <a class="grey-text text-lighten-4" href="#">Students</a></span>
+        <span class="right"> Design and Developed by Lona Kani Alfred <a class="grey-text text-lighten-4" href="#">Students</a></span>
         </div>
     </div>
   </footer>
